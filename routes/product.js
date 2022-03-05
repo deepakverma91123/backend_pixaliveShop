@@ -11,6 +11,7 @@ router.get('/products',productController.Getproduct)
 
 router.get('/products/search/:name',productController.search)
 
+router.get('/getproductcategory/:id', productController.getListByCategory)
 // 
 router.get('/admin/products', isAuthenticated,authorizeRoles('admin','seller'), productController.Getproduct)
 

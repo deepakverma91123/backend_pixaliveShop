@@ -1,4 +1,5 @@
 const express = require('express')
+const  {Category}  = require('../models/catergoies')
 const Product = require('../models/products')
 // const ApiFeatures = require('../utilis/apiFeatures')
 
@@ -74,6 +75,24 @@ exports.deleteProducts = async (req, res) => {
             message: true,
         })
     } catch (err) {
+        console.log(err)
+    }
+}
+exports.getListByCategory = async (req, res) => {
+    try {
+        // let filter = {}
+        // if (req.query.Category) {
+        //     filter = { Category: req.params.Category.split(',') }
+        // }
+        const categoryById = await Category.findById(req.query.id);
+        console.log(categoryById)
+        const getListByCategory = await Product.find(categoryById).populate('Category')
+        if (!getListByCategory) {
+            res.status(400).json({ message: "cant find data" })
+        }
+        res.status(200).json({ message: "Product by categroies", getListByCategory })
+    } catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
         console.log(err)
     }
 }

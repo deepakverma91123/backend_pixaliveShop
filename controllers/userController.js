@@ -8,9 +8,16 @@ const jwt = require('jsonwebtoken')
 // const user = require('../models/user');
 const sendEmail = require('../utilis/sendEmail')
 const crypto = require('crypto')
+const cloudinary = require('cloudinary').v2
 
 exports.registerUser = async (req, res) => {
     try {
+        const imageupload = await cloudinary.uploader.upload(req.body.avatar, {
+            folder: 'backendapi',
+            width: 150,
+            crop: "scale"
+        })
+        console.log(imageupload)
         secret = process.env.JWT
         const { name, email, password, role } = req.body;
         let findusers = await User.findOne({ email: req.body.email })
@@ -22,8 +29,8 @@ exports.registerUser = async (req, res) => {
             email,
             password,
             avatar: {
-                public_id: 'cyz',
-                url: "https,"
+                public_id: imageupload.public_id,
+                url: imageupload.secure_url
             }, role
         })
         if (!users) {
@@ -46,6 +53,7 @@ exports.registerUser = async (req, res) => {
             })
         }
     } catch (err) {
+        res.status(400).json({ mesage: "something went wrong" })
         console.log(err, 'error')
     }
 }
@@ -78,7 +86,7 @@ exports.isLogin = async (req, res) => {
     catch (err) {
         console.log(err)
         res.status(400).json({ message: "Something went wrong", err });
-       
+
     }
 }
 
@@ -288,6 +296,6 @@ exports.deleteUser = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.status(400).json({message:"something went wrong"})
+        res.status(400).json({ message: "something went wrong" })
     }
 }
