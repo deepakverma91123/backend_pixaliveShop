@@ -36,7 +36,6 @@ exports.registerUser = async (req, res) => {
         if (!users) {
             res.status(400).json({ messgae: "Failed to fetch user" })
         }
-
         if (users) {
             const token = users.getJwtToken()
             console.log(token)

@@ -6,13 +6,13 @@ const auth = require('./routes/users')
 const order = require('./routes/order')
 const Category = require('./routes/category')
 const cloudinary = require('cloudinary')
-
+const cors = require('cors')
 require('./models/config/config')
 require("dotenv").config();
 
 app.use(cookieParser());
 app.use(express.json())
-
+app.use(cors())
 // 
 cloudinary.config({
     cloud_name: "dsj9t6adh",
