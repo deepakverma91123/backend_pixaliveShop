@@ -31,23 +31,27 @@ const productSchema = new mongoose.Schema({
             }
         }
     ],
-    category: {
-        type: String,
-        required: true,
-        enum: {
-            values: [
-                'electronics',
-                'cameras',
-                'Laptop',
-                'Accesssories',
-                'Books',
-                'food',
-                'clothes',
-                'Home',
-                'others'
-            ]
-        }
+    Category: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Category'
     },
+    // category: {
+    //     type: String,
+    //     required: true,
+    //     enum: {
+    //         values: [
+    //             'electronics',
+    //             'cameras',
+    //             'Laptop',
+    //             'Accesssories',
+    //             'Books',
+    //             'food',
+    //             'clothes',
+    //             'Home',
+    //             'others'
+    //         ]
+    //     }
+    // },
     seller: {
         type: String,
         required: true
