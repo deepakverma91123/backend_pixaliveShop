@@ -84,16 +84,9 @@ exports.getListByCategory = async (req, res) => {
         // if (req.query.Category) {
         //     filter = { Category: req.params.Category.split(',') }
         // }
-<<<<<<< HEAD
-        const categoryById = await Category.findById(req.params.id);
-        console.log(categoryById)
-      
-        const getListByCategory = await Product.find({category:categoryById});
-=======
         const categoryById = await Category.find({id:req.params.id});
         console.log(categoryById)
         const getListByCategory = await Product.find({categoryById}).populate('Category')
->>>>>>> dc23d94e482b4daf5c666a80d8c6a219c7b68615
         if (!getListByCategory) {
             res.status(400).json({ message: "cant find data" })
         }
