@@ -56,6 +56,7 @@ exports.registerUser = async (req, res) => {
         })
         if (!users) {
             res.status(400).json({ messgae: "Failed to fetch user" })
+            return;
         }
         if (users) {
             const token = users.getJwtToken()
@@ -63,14 +64,16 @@ exports.registerUser = async (req, res) => {
             const salt = await bcrypt.genSalt(10);
             users.password = await bcrypt.hash(users.password, salt);
             await users.save()
-            res.cookie("token", token, {
-                expries: new Date(
-                    Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
-                ), httpOnly: true
-            }).json({
-                message: true,
-                users, token
-            })
+            res.status(200).json({mesage:"user added !!",users,token})
+            console.log(users)
+            // res.cookie("token", token, {
+            //     expries: new Date(
+            //         Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
+            //     ), httpOnly: true
+            // }).json({
+            //     message: true,
+            //     users, token
+            // })
         }
     } catch (err) {
         res.status(400).json({ mesage: "something went wrong" })
@@ -84,6 +87,7 @@ exports.isLogin = async (req, res) => {
         const user = await User.findOne({ email: req.body.email })
         if (!user) {
             res.status(400).json({ message: "user not found" })
+            return;
         }
         const validPassword = await bcrypt.compare(
             req.body.password,
@@ -91,6 +95,7 @@ exports.isLogin = async (req, res) => {
         );
         if (!validPassword) {
             res.status(400).json({ message: "password wrong" })
+            return;
         }
         if (validPassword) {
             const token = user.getJwtToken()

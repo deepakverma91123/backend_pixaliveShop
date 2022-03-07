@@ -43,6 +43,7 @@ exports.getSingleOrder = async (req, res, next) => {
         const order = await Order.findById(req.params.id).populate('user', 'name email')
         if (!order) {
             res.status(400).json({ message: "order not found" })
+            return;
         }
         res.status(200).json({ message: "Order found", order })
     } catch (err) {
@@ -59,6 +60,7 @@ exports.myOrder = async (req, res) => {
         console.log(orders)
         if (!orders) {
             res.status(400).json({ message: "you have no orders" })
+            return;
         }
         res.status(200).json({ message: "order", orders })
     }
@@ -79,6 +81,7 @@ exports.allOrders = async (req, res) => {
         })
         if (orders) {
             res.status(200).json({ message: "Order fornd", totalPrice, orders })
+            return;
         }
     } catch (err) {
         console.log(err)
@@ -129,6 +132,7 @@ exports.deleteOrder = async (req, res) => {
         const orders = await Order.findById(req.params.id)
         if (!orders) {
             res.status(400).json({ message: "No order found" })
+            return;
         }
         await orders.remove()
         res.status(200).json({ message: "order deleted sucessfully", orders })

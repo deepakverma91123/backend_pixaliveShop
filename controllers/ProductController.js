@@ -92,6 +92,7 @@ exports.getListByCategory = async (req, res) => {
         const getListByCategory = await Product.find({ category: categoryById });
         if (!getListByCategory) {
             res.status(400).json({ message: "cant find data" })
+            return;
         }
         res.status(200).json({ message: "Product by categroies", getListByCategory })
     } catch (err) {
