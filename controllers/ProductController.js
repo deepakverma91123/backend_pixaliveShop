@@ -1,5 +1,5 @@
 const express = require('express')
-const  {Category}  = require('../models/catergoies')
+const { Category } = require('../models/catergoies')
 const Product = require('../models/products')
 // const ApiFeatures = require('../utilis/apiFeatures')
 

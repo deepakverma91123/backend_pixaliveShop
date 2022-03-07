@@ -19,19 +19,19 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    images: [
+    images: 
         {
             public_id: {
                 type: String,
-                required: true
+                // required: true
             },
             url: {
                 type: String,
-                required: true
+                // required: true
             }
         }
-    ],
-    Category: {
+    ,
+    category: {
         type: mongoose.Schema.ObjectId,
         ref: 'Category'
     },
