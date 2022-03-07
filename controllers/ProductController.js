@@ -16,6 +16,8 @@ exports.newproduct = async (req, res) => {
 exports.Getproduct = async (req, res) => {
     try {
         const products = await Product.find();
+
+      
         res.status(200).json({
             message: "Product fetch",
             count: products.length,
@@ -86,12 +88,34 @@ exports.getListByCategory = async (req, res) => {
         // }
         const categoryById = await Category.findById(req.params.id);
         console.log(categoryById)
-      
-        const getListByCategory = await Product.find({category:categoryById});
+
+        const getListByCategory = await Product.find({ category: categoryById });
         if (!getListByCategory) {
             res.status(400).json({ message: "cant find data" })
         }
         res.status(200).json({ message: "Product by categroies", getListByCategory })
+    } catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
+        console.log(err)
+    }
+}
+
+exports.productreview = async (req, res) => {
+    try {
+
+        const reviews = await Product.findById(req.params.id);
+        console.log(reviews)
+
+        this.products.filter(res => {
+            console.log(res)
+        })
+        res.status(200).json({
+            message: "Product reviews",
+
+            reviews
+
+        })
+
     } catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)
