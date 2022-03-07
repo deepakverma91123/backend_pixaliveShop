@@ -9,23 +9,34 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require('../utilis/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary').v2
+<<<<<<< HEAD
+const multer = require('multer');
+const storages = multer.diskStorage({
+    destination: (req, avatar, callBack) => {
+        callBack(null, 'uploads')
+    },
+    filename: (req, file, callBack) => {
+        callBack(null, `${file.originalname}`)
+    }
+})
+=======
 const fs = require('fs');
+>>>>>>> b2aa9c6f4b9babbee2c5110da2fbf1d2f7a743ac
 
+// const upload = multer({ storage: storage })
 exports.registerUser = async (req, res) => {
     try {
-        var base64str = base64_encode(req.body.avatar);
-        console.log(base64str);
 
-        function base64_encode(file) {
-            return "data:image/gif;base64," + fs.readFileSync(file, 'base64');
-        }
-
-        const imageupload = await cloudinary.uploader.upload(base64str, {
+        // let t = upload.single(file);
+        // console.log(t)
+        const imageupload = await cloudinary.uploader.upload(req.body.avatar, {
             folder: 'backendapi',
             width: 150,
             crop: "scale"
         })
-        console.log(imageupload)
+        const upload = multer({ storage: imageupload });
+        console.log('upload', upload)
+        // console.log(imageupload)
         secret = process.env.JWT
         const { name, email, password, role } = req.body;
         let findusers = await User.findOne({ email: req.body.email })
