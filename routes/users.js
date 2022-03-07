@@ -3,6 +3,7 @@ const router = express.Router()
 const fileUpload = require('express-fileupload')
 const UserController = require('../controllers/userController');
 const { isAuthenticated, authorizeRoles } = require('../middleware/Auth');
+ 
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -17,6 +18,9 @@ router.use(fileUpload({
     useTempFiles: true
 }))
 router.post('/register', UserController.registerUser)
+ 
+
+ 
 
 router.post('/login', UserController.isLogin)
 
