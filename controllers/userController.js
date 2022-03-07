@@ -9,10 +9,18 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require('../utilis/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary').v2
+const fs = require('fs');
 
 exports.registerUser = async (req, res) => {
     try {
-        const imageupload = await cloudinary.uploader.upload(req.body.avatar, {
+        var base64str = base64_encode(req.body.avatar);
+        console.log(base64str);
+
+        function base64_encode(file) {
+            return "data:image/gif;base64," + fs.readFileSync(file, 'base64');
+        }
+
+        const imageupload = await cloudinary.uploader.upload(base64str, {
             folder: 'backendapi',
             width: 150,
             crop: "scale"
