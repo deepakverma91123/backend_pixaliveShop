@@ -1,11 +1,26 @@
 const express = require('express')
 const router = express.Router()
-
+const fileUpload = require('express-fileupload')
 const UserController = require('../controllers/userController');
 const { isAuthenticated, authorizeRoles } = require('../middleware/Auth');
-const upload = require('../utilis/multer')
+ 
+const multer = require('multer');
 
-router.post('/register', upload.single("image"), UserController.registerUser)
+const storage = multer.diskStorage({
+    destination: (req, avatar, callBack) => {
+        callBack(null, 'uploads')
+    },
+    filename: (req, file, callBack) => {
+        callBack(null, `${file.originalname}`)
+    }
+})
+router.use(fileUpload({
+    useTempFiles: true
+}))
+router.post('/register', UserController.registerUser)
+ 
+
+ 
 
 router.post('/login', UserController.isLogin)
 

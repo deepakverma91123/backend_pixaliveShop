@@ -20,16 +20,22 @@ const multer = require('multer');
 // const upload = multer({ storage: storage })
 exports.registerUser = async (req, res) => {
     try {
+        console.log(req.body)
+        const file = req.files.avatar
+        console.log(file)
 
-        // let t = upload.single(file);
-        // console.log(t)
-        // const dd = req.body.avatar
-        const imageupload = await cloudinary.uploader.upload(req.body.avatar, {
-            folder: 'backendapi',
-            width: 150,
-            crop: "scale"
+ 
+        const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+            console.log('resu', result)
         })
-        const upload = multer({ storage: imageupload });
+
+        // const imageupload = await cloudinary.uploader.upload(file.tempFilePath,(err,result) {
+        //     folder: 'backendapi',
+        //     width: 150,
+        //     crop: "scale"
+        // })
+        // const upload = multer({ storage: imageupload });
+
         // console.log('upload', upload)
         // console.log(imageupload)
         secret = process.env.JWT
