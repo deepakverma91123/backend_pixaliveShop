@@ -10,6 +10,7 @@ const sendEmail = require('../utilis/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary').v2
 const multer = require('multer');
+
 const storages = multer.diskStorage({
     destination: (req, avatar, callBack) => {
         callBack(null, 'uploads')
@@ -18,7 +19,6 @@ const storages = multer.diskStorage({
         callBack(null, `${file.originalname}`)
     }
 })
-const fs = require('fs');
 
 // const upload = multer({ storage: storage })
 exports.registerUser = async (req, res) => {
