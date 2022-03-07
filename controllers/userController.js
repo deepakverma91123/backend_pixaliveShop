@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require('../utilis/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary').v2
+<<<<<<< HEAD
 const multer = require('multer');
 const storages = multer.diskStorage({
     destination: (req, avatar, callBack) => {
@@ -18,6 +19,9 @@ const storages = multer.diskStorage({
         callBack(null, `${file.originalname}`)
     }
 })
+=======
+const fs = require('fs');
+>>>>>>> b2aa9c6f4b9babbee2c5110da2fbf1d2f7a743ac
 
 // const upload = multer({ storage: storage })
 exports.registerUser = async (req, res) => {
