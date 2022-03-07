@@ -2,23 +2,20 @@ const express = require('express');
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-// const cookie = require('../utilis/cookies');
-// const sendToken = require('../middleware/Auth');
-// const user = require('../models/user');
-// const user = require('../models/user');
+const upload = require("../utilis/multer");
 const sendEmail = require('../utilis/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary').v2
 const multer = require('multer');
 
-const storages = multer.diskStorage({
-    destination: (req, avatar, callBack) => {
-        callBack(null, 'uploads')
-    },
-    filename: (req, file, callBack) => {
-        callBack(null, `${file.originalname}`)
-    }
-})
+// const storages = multer.diskStorage({
+//     destination: (req, avatar, callBack) => {
+//         callBack(null, 'uploads')
+//     },
+//     filename: (req, file, callBack) => {
+//         callBack(null, `${file.originalname}`)
+//     }
+// })
 
 // const upload = multer({ storage: storage })
 exports.registerUser = async (req, res) => {
@@ -26,19 +23,21 @@ exports.registerUser = async (req, res) => {
 
         // let t = upload.single(file);
         // console.log(t)
+        // const dd = req.body.avatar
         const imageupload = await cloudinary.uploader.upload(req.body.avatar, {
             folder: 'backendapi',
             width: 150,
             crop: "scale"
         })
         const upload = multer({ storage: imageupload });
-        console.log('upload', upload)
+        // console.log('upload', upload)
         // console.log(imageupload)
         secret = process.env.JWT
         const { name, email, password, role } = req.body;
         let findusers = await User.findOne({ email: req.body.email })
         if (findusers) {
             res.status(401).json('users already present')
+            return;
         }
         const users = await User.create({
             name,

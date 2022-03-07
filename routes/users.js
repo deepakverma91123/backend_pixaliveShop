@@ -3,8 +3,9 @@ const router = express.Router()
 
 const UserController = require('../controllers/userController');
 const { isAuthenticated, authorizeRoles } = require('../middleware/Auth');
+const upload = require('../utilis/multer')
 
-router.post('/register', UserController.registerUser)
+router.post('/register', upload.single("image"), UserController.registerUser)
 
 router.post('/login', UserController.isLogin)
 
