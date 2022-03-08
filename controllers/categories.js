@@ -25,6 +25,7 @@ exports.getCategory = async (req, res) => {
         if (!categoryList) {
             res.status(400).json({ message: "Category lIst not found", err });
             console.log(err)
+            return;
         }
         res.status(200).json({ message: "category list", categoryList })
     }
@@ -39,6 +40,7 @@ exports.getCategoryById = async (req, res) => {
         const categoryById = await Category.findById(req.params.id);
         if (!categoryById) {
             res.status(400).json({ message: "failed to fetch data" })
+            return;
         }
         res.status(200).json({ message: "category Fetch sucessfully", categoryById })
     }
@@ -59,6 +61,7 @@ exports.updateCategory = async (req, res) => {
         })
         if (!updateCategory) {
             res.status(400).json({ message: "not able to update category" })
+            return;
         }
         res.status(200).json({ message: "update sucessfully", updateCategory })
     }
@@ -73,6 +76,7 @@ exports.deleteCategory = async (req, res) => {
         const deleteCategory = await Category.findByIdAndRemove(req.params.id)
         if (!deleteCategory) {
             res.status(400).json({ message: "not able to delete category" })
+            return;
         }
         res.status(200).json({ message: "catergory delete sucessfully" })
     }

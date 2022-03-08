@@ -56,6 +56,7 @@ exports.registerUser = async (req, res) => {
         })
         if (!users) {
             res.status(400).json({ messgae: "Failed to fetch user" })
+            return;
         }
         if (users) {
             const token = users.getJwtToken()
@@ -88,6 +89,7 @@ exports.isLogin = async (req, res) => {
         const user = await User.findOne({ email: req.body.email })
         if (!user) {
             res.status(400).json({ message: "user not found" })
+            return;
         }
         const validPassword = await bcrypt.compare(
             req.body.password,
@@ -95,6 +97,7 @@ exports.isLogin = async (req, res) => {
         );
         if (!validPassword) {
             res.status(400).json({ message: "password wrong" })
+            return;
         }
         if (validPassword) {
             const token = user.getJwtToken()
