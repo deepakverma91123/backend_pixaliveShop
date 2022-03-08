@@ -103,11 +103,12 @@ exports.isLogin = async (req, res) => {
             const token = user.getJwtToken()
             // console.log(token)
             let userrole = user.role
-            res.send('token', token, {
-                expries: new Date(
-                    Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
-                ), httpOnly: true
-            }).status(200).json({ message: "user Authenicated", user: user.email, userrole, token: token })
+           return res.status(200).json({message: 'User added success', user, token, userrole })
+            // res.send('token', token, {
+            //     expries: new Date(
+            //         Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
+            //     ), httpOnly: true
+            // }).status(200).json({ message: "user Authenicated", user: user.email, userrole, token: token })
         }
     }
     catch (err) {
