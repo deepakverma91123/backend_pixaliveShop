@@ -63,14 +63,18 @@ exports.registerUser = async (req, res) => {
             const salt = await bcrypt.genSalt(10);
             users.password = await bcrypt.hash(users.password, salt);
             await users.save()
-            res.cookie("token", token, {
-                expries: new Date(
-                    Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
-                ), httpOnly: true
-            }).json({
-                message: true,
-                users, token
+            res.status(200).json({
+                message:'user successfuly', 
+                users,token
             })
+            // res.cookie("token", token, {
+            //     expries: new Date(
+            //         Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
+            //     ), httpOnly: true
+            // }).json({
+            //     message: true,
+            //     users, token
+            // })
         }
     } catch (err) {
         res.status(400).json({ mesage: "something went wrong" })
@@ -96,7 +100,7 @@ exports.isLogin = async (req, res) => {
             const token = user.getJwtToken()
             // console.log(token)
             let userrole = user.role
-            res.cookie('token', token, {
+            res.send('token', token, {
                 expries: new Date(
                     Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
                 ), httpOnly: true
