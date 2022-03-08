@@ -3,6 +3,7 @@ const { Category } = require('../models/catergoies');
 // const router = require('../routes/routes');
 
 exports.categories = async (req, res) => {
+    console.log()
     try {
         const category = new Category({
             name: req.body.name,

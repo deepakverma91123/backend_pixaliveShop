@@ -5,6 +5,7 @@ const user = require('../models/user');
 exports.isAuthenticated = async (req, res, next) => {
     try {
         const token = req.cookies.token;
+        console.log(token,'token')
         const verfiyUser = jwt.verify(token, process.env.JWT);
         console.log('verfiyr', verfiyUser)
 

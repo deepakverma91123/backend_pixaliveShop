@@ -64,16 +64,16 @@ exports.registerUser = async (req, res) => {
             const salt = await bcrypt.genSalt(10);
             users.password = await bcrypt.hash(users.password, salt);
             await users.save()
-            res.status(200).json({mesage:"user added !!",users,token})
+            // res.status(200).json({mesage:"user added !!",users,token})
             console.log(users)
-            // res.cookie("token", token, {
-            //     expries: new Date(
-            //         Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
-            //     ), httpOnly: true
-            // }).json({
-            //     message: true,
-            //     users, token
-            // })
+            res.cookie("token", token, {
+                expries: new Date(
+                    Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
+                ), httpOnly: true
+            }).json({
+                message: true,
+                users, token
+            })
         }
     } catch (err) {
         res.status(400).json({ mesage: "something went wrong" })
