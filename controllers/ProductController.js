@@ -17,7 +17,7 @@ exports.Getproduct = async (req, res) => {
     try {
         const products = await Product.find();
 
-      
+
         res.status(200).json({
             message: "Product fetch",
             count: products.length,
@@ -114,6 +114,58 @@ exports.productreview = async (req, res) => {
             message: "Product reviews",
 
             reviews
+
+        })
+
+    } catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
+        console.log(err)
+    }
+}
+
+
+
+exports.sortbyprice = async (req, res) => {
+    try {
+        const sortObject = {};
+        const p = req.params.price
+        console.log(p)
+        const pricedata = await Product.find({price: { $eq: p }}).select({ price: 1 }).sort({ price: -1 });
+        console.log(pricedata)
+
+        // this.products.filter(res => {
+        //     console.log(res)
+        // })
+        res.status(200).json({
+            message: "Sort By Price",
+
+            pricedata
+
+        })
+
+    } catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
+        console.log(err)
+    }
+}
+
+
+
+exports.sortbypriceeq = async (req, res) => {
+    try {
+        const sortObject = {};
+        const p = req.params.price
+        console.log(p)
+        const pricedata = await Product.find({price: { $gte: p }}).select({ price: 1 }).sort({ price: -1 });
+        console.log(pricedata)
+
+        // this.products.filter(res => {
+        //     console.log(res)
+        // })
+        res.status(200).json({
+            message: "Sort By Price",
+
+            pricedata
 
         })
 
