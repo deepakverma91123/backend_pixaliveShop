@@ -5,11 +5,13 @@ const user = require('../models/user');
 exports.isAuthenticated = async (req, res, next) => {
     try {
         // const token = req.cookies.token;
-        const token = req.header("Authorization");
+        const token = req.get('Authorization');
+        console.log(token, 't');
         const verfiyUser = jwt.verify(token, process.env.JWT);
         console.log('verfiyr', verfiyUser)
-
+        // req.user = verfiyUser
         req.user = await user.findById(verfiyUser.id)
+        
         // req.token = token
         //  = data;
         next()
@@ -22,9 +24,9 @@ exports.isAuthenticated = async (req, res, next) => {
 exports.authorizeRoles = (...roles) => {
     return async (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            
             return next(res.json("roles not allowed"))
         }
+        // console.log(roles)
         next()
     }
 }

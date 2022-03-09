@@ -8,9 +8,9 @@ router.post('/category',isAuthenticated,authorizeRoles('admin'), categoryControl
 
 router.get('/getcategory', categoryController.getCategory)
 
-router.put('/category/:id',isAuthenticated,authorizeRoles('admin'), categoryController.updateCategory)
+router.put('/category/:id',isAuthenticated, authorizeRoles('admin'), categoryController.updateCategory)
 
-router.delete("/deletecategories/:id",isAuthenticated,authorizeRoles('admin'), categoryController.deleteCategory)
+router.delete("/deletecategories/:id",isAuthenticated, authorizeRoles('admin'), categoryController.deleteCategory)
 
 router.get('/category/:id', categoryController.getCategoryById)
 
