@@ -32,12 +32,17 @@ exports.Getproduct = async (req, res) => {
 exports.search = async (req, res) => {
     var regex = new RegExp(req.params.name, 'i')
     const searchproducts = await Product.find({ name: regex })
-        .then((result) => {
-            res.status(200).json({ result, count: Product.length })
-        })
-    // if (!searchproducts) {
-
-    // }
+        // .then((result) => {
+        //     res.status(200).json({ result, count: Product.length })
+        // })
+    if (!searchproducts) {
+        res.status(400).json({message:"not found"})
+        return;
+    }
+    res.status(200).json({
+        searchproducts,
+        count: Product.length
+    })
 }
 
 
@@ -127,15 +132,13 @@ exports.productreview = async (req, res) => {
 
 exports.sortbyprice = async (req, res) => {
     try {
-        const sortObject = {};
+        // const sortObject = {};
         const p = req.params.price
         console.log(p)
-        const pricedata = await Product.find({price: { $eq: p }}).select({ price: 1 }).sort({ price: -1 });
+        const pricedata = await Product.find({price: { $eq: p }}).select({ price: 1,name:1 }).sort({ price: -1 });
         console.log(pricedata)
 
-        // this.products.filter(res => {
-        //     console.log(res)
-        // })
+        
         res.status(200).json({
             message: "Sort By Price",
 
@@ -156,7 +159,7 @@ exports.sortbypriceeq = async (req, res) => {
         const sortObject = {};
         const p = req.params.price
         console.log(p)
-        const pricedata = await Product.find({price: { $gte: p }}).select({ price: 1 }).sort({ price: -1 });
+        const pricedata = await Product.find({price: { $gte: p }}).select({ price: 1,name:1 }).sort({ price: -1 });
         console.log(pricedata)
 
         // this.products.filter(res => {
