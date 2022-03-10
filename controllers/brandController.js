@@ -6,7 +6,31 @@ exports.addBrands = async (req, res) => {
     try {
         const data = req.body
         const brand = await brands.create({
-            data
+            // date: { type: Date, default: Date.now },
+
+            brandName: req.body.brandName,
+
+            contactPerson: req.body.contactPerson,
+
+            contact: req.body.contact,
+
+            email: req.body.email,
+
+            marketplaceUrl:req.body.marketplaceUrl,
+
+            ownwebsiteUrl: req.body.ownwebsiteUrl,
+
+            // category: { type: mongoose., },
+
+            city: req.body.city,
+
+            revenueinCrores: req.body.revenueinCrores,
+
+            monthlyRevenue: req.body.monthlyRevenue,
+
+            additionalInformation: req.body.additionalInformation,
+
+            approval: req.body.approval
         })
         if (!brand) {
             res.status(400).json({ message: 'cannot add brand' })
@@ -46,7 +70,7 @@ exports.Approved = async (req, res) => {
     try {
         // let data = req.body
         const updateCategory = await brands.findByIdAndUpdate(req.params.id, {
-            approval:req.body.approval
+            approval: req.body.approval
         }, {
             new: true
         })
