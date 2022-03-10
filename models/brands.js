@@ -16,7 +16,7 @@ const brandSchema = new mongoose.Schema({
 
     ownwebsiteUrl: { type: String, },
 
-    category: { type: String, },
+    // category: { type: mongoose., },
 
     city: { type: String, },
 
