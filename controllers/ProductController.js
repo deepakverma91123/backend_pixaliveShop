@@ -32,11 +32,11 @@ exports.Getproduct = async (req, res) => {
 exports.search = async (req, res) => {
     var regex = new RegExp(req.params.name, 'i')
     const searchproducts = await Product.find({ name: regex })
-        // .then((result) => {
-        //     res.status(200).json({ result, count: Product.length })
-        // })
+    // .then((result) => {
+    //     res.status(200).json({ result, count: Product.length })
+    // })
     if (!searchproducts) {
-        res.status(400).json({message:"not found"})
+        res.status(400).json({ message: "not found" })
         return;
     }
     res.status(200).json({
@@ -135,10 +135,10 @@ exports.sortbyprice = async (req, res) => {
         // const sortObject = {};
         const p = req.params.price
         console.log(p)
-        const pricedata = await Product.find({price: { $eq: p }}).select({ price: 1,name:1 }).sort({ price: -1 });
+        const pricedata = await Product.find({ price: { $eq: p } }).select({ price: 1, name: 1 }).sort({ price: -1 });
         console.log(pricedata)
 
-        
+
         res.status(200).json({
             message: "Sort By Price",
 
@@ -159,7 +159,7 @@ exports.sortbypriceeq = async (req, res) => {
         const sortObject = {};
         const p = req.params.price
         console.log(p)
-        const pricedata = await Product.find({price: { $gte: p }}).select({ price: 1,name:1 }).sort({ price: -1 });
+        const pricedata = await Product.find({ price: { $gte: p } }).select({ price: 1, name: 1 }).sort({ price: -1 });
         console.log(pricedata)
 
         // this.products.filter(res => {
@@ -176,4 +176,14 @@ exports.sortbypriceeq = async (req, res) => {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)
     }
+}
+
+exports.getProductById = async (req, res) => {
+    console.log(req.params.id);
+    const products = await Product.findById(req.params.id)
+    if (!products) {
+        res.status(500).json({ success: false, message: "No Product found with this ID" });
+        return
+    }
+    res.send(products);
 }

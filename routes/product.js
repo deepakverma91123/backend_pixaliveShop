@@ -14,6 +14,7 @@ router.get('/products/search/:name', productController.search)
 router.put('/product/:id',isAuthenticated, authorizeRoles('admin'), productController.updateProducts)
 
 // router .delete('/product/:id',isAuthenticated, authorizeRoles('admin'), deleteProducts)
+router.get('/:id',productController.getProductById)
 
 router.get('/products/sortbyprice/:price', productController.sortbyprice)
 
