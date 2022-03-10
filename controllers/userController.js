@@ -28,16 +28,6 @@ exports.registerUser = async (req, res) => {
         const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
             console.log('resu', result)
         })
-
-        // const imageupload = await cloudinary.uploader.upload(file.tempFilePath,(err,result) {
-        //     folder: 'backendapi',
-        //     width: 150,
-        //     crop: "scale"
-        // })
-        // const upload = multer({ storage: imageupload });
-
-        // console.log('upload', upload)
-        // console.log(imageupload)
         secret = process.env.JWT
         const { name, email, password, role } = req.body;
         let findusers = await User.findOne({ email: req.body.email })

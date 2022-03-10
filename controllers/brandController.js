@@ -43,9 +43,9 @@ exports.addBrands = async (req, res) => {
 
 exports.Approved = async (req, res) => {
     try {
-        let data = req.body
+        // let data = req.body
         const updateCategory = await brands.findByIdAndUpdate(req.params.id, {
-            data
+            approval:req.body.approval
         }, {
             new: true
         })

@@ -3,15 +3,15 @@ const { isAuthenticated, authorizeRoles } = require('../middleware/Auth')
 const router = express.Router()
 const BrandsController = require('../controllers/brandController')
 
-router.post('/brandsdetails',isAuthenticated,authorizeRoles('admin','seller'),BrandsController.addBrands)
+router.post('/brandsdetails',BrandsController.addBrands)
 
-router.get('/branddetails',isAuthenticated,authorizeRoles('admin'),BrandsController.getAllBrands)
+router.get('/branddetails',BrandsController.getAllBrands)
 
 // console.log(authorizeRoles)
 // neeed to check
-router.put('/approve/:id',isAuthenticated,BrandsController.Approved)
+router.put('/approve/:id',BrandsController.Approved)
 
-router.delete('/deletebrands/:id',isAuthenticated,authorizeRoles('admin'),BrandsController.deleteBrand)
+router.delete('/deletebrands/:id',BrandsController.deleteBrand)
 
 
 module.exports = router

@@ -4,6 +4,7 @@ const { Category } = require('../models/catergoies');
 
 exports.categories = async (req, res) => {
     try {
+        
         const category = new Category({
             name: req.body.name,
             color: req.body.color,
