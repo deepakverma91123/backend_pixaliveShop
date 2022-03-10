@@ -5,17 +5,18 @@ const brands = require('../models/brands')
 exports.addBrands = async (req, res) => {
     try {
         const data = req.body
-        const brands = await brands.create({
+        const brand = await brands.create({
             data
         })
-        if (!brands) {
+        if (!brand) {
             res.status(400).json({ message: 'cannot add brand' })
             return;
         }
-        await brands.save()
-        res.status(200).json({ message: "barnds added ,awating for approval", brands })
+        await brand.save()
+        res.status(200).json({ message: "brands added ,awating for approval", brand })
 
     } catch (err) {
+        console.log(err)
         res.status(500).json({ message: "something went wrong", err })
     }
 }

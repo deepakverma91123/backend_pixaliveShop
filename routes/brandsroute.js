@@ -3,7 +3,7 @@ const { isAuthenticated, authorizeRoles } = require('../middleware/Auth')
 const router = express.Router()
 const BrandsController = require('../controllers/brandController')
 
-router.post('/brandsdetails',BrandsController.addBrands)
+router.post('/brandsdetails',isAuthenticated,BrandsController.addBrands)
 
 router.get('/branddetails',BrandsController.getAllBrands)
 
