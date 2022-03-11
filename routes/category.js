@@ -5,9 +5,9 @@ const fileUpload = require('express-fileupload')
 const categoryController = require('../controllers/categories')
 const { isAuthenticated, authorizeRoles } = require('../middleware/Auth')
 
-router.use(fileUpload({
-    useTempFiles: true
-}))
+// router.use(fileUpload({
+//     useTempFiles: true
+// }))
 
 router.post('/category',isAuthenticated,authorizeRoles('admin'), categoryController.categories)
 

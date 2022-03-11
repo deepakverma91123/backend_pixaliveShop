@@ -22,10 +22,12 @@ exports.categories = async (req, res) => {
 
 exports.getCategory = async (req, res) => {
     try {
+        console.log(req)
         const categoryList = await Category.find();
+        console.log(categoryList)
         if (!categoryList) {
-            res.status(400).json({ message: "Category lIst not found", err });
-            console.log(err)
+            res.status(400).json({ message: "Category lIst not found" });
+           
             return;
         }
         res.status(200).json({ message: "category list", categoryList })

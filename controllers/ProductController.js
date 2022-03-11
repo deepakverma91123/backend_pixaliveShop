@@ -178,12 +178,12 @@ exports.sortbypriceeq = async (req, res) => {
     }
 }
 
-exports.getProductById = async (req, res) => {
-    console.log(req.params.id);
-    const products = await Product.findById(req.params.id)
-    if (!products) {
-        res.status(500).json({ success: false, message: "No Product found with this ID" });
-        return
-    }
-    res.send(products);
-}
+// exports.getProductById = async (req, res) => {
+//     console.log(req.params.id);
+//     const products = await Product.findById(req.params.id)
+//     if (!products) {
+//         res.status(500).json({ success: false, message: "No Product found with this ID" });
+//         return
+//     }
+//     res.send(products);
+// }
