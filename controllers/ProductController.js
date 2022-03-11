@@ -178,12 +178,17 @@ exports.sortbypriceeq = async (req, res) => {
     }
 }
 
-// exports.getProductById = async (req, res) => {
-//     console.log(req.params.id);
-//     const products = await Product.findById(req.params.id)
-//     if (!products) {
-//         res.status(500).json({ success: false, message: "No Product found with this ID" });
-//         return
-//     }
-//     res.send(products);
-// }
+exports.GetproductById = async (req, res) => {
+    try {
+        const getProductId = await Product.findById(req.params.id).populate('category');
+        if (!getProductId) {
+            res.status(400).json({message:"Product Not Found"})
+            return;
+        }
+        res.status(200).json({message:"Product By Category",getProductId})
+
+    } catch (err) {
+        res.status(500).json({message:"Something went wrong"})
+        console.log(err)
+    }
+}

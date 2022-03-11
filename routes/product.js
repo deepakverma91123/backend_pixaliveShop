@@ -13,6 +13,8 @@ router.get('/products/search/:name', productController.search)
 // sort by price 
 router.put('/product/:id',isAuthenticated, authorizeRoles('admin'), productController.updateProducts)
 
+
+router.get('/productsid/:id',productController.GetproductById)
 // router .delete('/product/:id',isAuthenticated, authorizeRoles('admin'), deleteProducts)
 // router.get('product/:id',productController.getProductById)
 
