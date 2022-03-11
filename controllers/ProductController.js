@@ -182,13 +182,29 @@ exports.GetproductById = async (req, res) => {
     try {
         const getProductId = await Product.findById(req.params.id).populate('category');
         if (!getProductId) {
-            res.status(400).json({message:"Product Not Found"})
+            res.status(400).json({ message: "Product Not Found" })
             return;
         }
-        res.status(200).json({message:"Product By Category",getProductId})
+        res.status(200).json({ message: "Product By Category", getProductId })
 
     } catch (err) {
-        res.status(500).json({message:"Something went wrong"})
+        res.status(500).json({ message: "Something went wrong" })
+        console.log(err)
+    }
+}
+
+
+exports.Promotion = async (req, res) => {
+    try {
+        const getProductId = await Product.findById(req.params.id).populate('category', 'user')
+        if (!getProductId) {
+            res.status(400).json({ message: "Product Not Found" })
+            return;
+        }
+        res.status(200).json({ message: "Product By Promotion", getProductId })
+
+    } catch (err) {
+        res.status(500).json({ message: "Something went wrong" })
         console.log(err)
     }
 }

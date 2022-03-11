@@ -4,17 +4,17 @@ const productController = require('../controllers/ProductController')
 const { isAuthenticated, authorizeRoles } = require('../middleware/Auth')
 // const authenticated = require('../middleware/authenticated')
 // const auth = require('../middleware/authenticated')
-router.post('/product/new', isAuthenticated, authorizeRoles('admin', 'seller'), productController.newproduct)
+router.post('/product/new' , productController.newproduct)
 
 //get all products in homepage
 router.get('/products', productController.Getproduct)
 
 router.get('/products/search/:name', productController.search)
 // sort by price 
-router.put('/product/:id',isAuthenticated, authorizeRoles('admin'), productController.updateProducts)
+router.put('/product/:id', isAuthenticated, authorizeRoles('admin'), productController.updateProducts)
 
 
-router.get('/productsid/:id',productController.GetproductById)
+router.get('/productsid/:id', productController.GetproductById)
 // router .delete('/product/:id',isAuthenticated, authorizeRoles('admin'), deleteProducts)
 // router.get('product/:id',productController.getProductById)
 
@@ -30,6 +30,10 @@ router.get('/products/sortbypriceeq/:price', productController.sortbypriceeq)
 router.get('/getproductcategory/:id', productController.getListByCategory);
 // product review 
 router.get('/productreview/:id', productController.productreview);
+
+// promotion 
+router.get('/productpromotion/:id', productController.Promotion);
+
 
 
 // 
