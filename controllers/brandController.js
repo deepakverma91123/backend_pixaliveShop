@@ -16,7 +16,7 @@ exports.addBrands = async (req, res) => {
 
             email: req.body.email,
 
-            marketplaceUrl:req.body.marketplaceUrl,
+            marketplaceUrl: req.body.marketplaceUrl,
 
             ownwebsiteUrl: req.body.ownwebsiteUrl,
 
@@ -110,5 +110,19 @@ exports.deleteBrand = async (req, res) => {
         res.status(200).json({ message: "BrandsDelete Sucessfully" })
     } catch (err) {
 
+    }
+}
+
+exports.getBrandById = async (req, res) => {
+    try {
+        const getbrandByID = await brands.findById(req.params.id )
+        console.log(this.getBrandById)
+        if (!getbrandByID) {
+            res.status(400).json({ messga: "brand doesnt not exist" })
+            return;
+        }
+        res.status(200).json({ message: "brands by id", getbrandByID })
+    } catch (err) {
+        res.status(500).json({message:"something went wrong",err})
     }
 }
