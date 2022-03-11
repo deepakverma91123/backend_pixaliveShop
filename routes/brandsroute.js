@@ -7,7 +7,7 @@ router.post('/brandsdetails',isAuthenticated,BrandsController.addBrands)
 
 router.get('/branddetails',BrandsController.getAllBrands)
 
-router.get('/brand/:id',BrandsController.getBrandById)
+router.get('/brandedit/:id',BrandsController.getBrandById)
 // console.log(authorizeRoles)
 // neeed to check
 router.put('/approve/:id',BrandsController.Approved)
