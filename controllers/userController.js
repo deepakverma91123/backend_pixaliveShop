@@ -24,7 +24,7 @@ exports.registerUser = async (req, res) => {
         const file = req.files.avatar
         console.log(file)
 
- 
+
         const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
             console.log('resu', result)
         })
@@ -55,8 +55,8 @@ exports.registerUser = async (req, res) => {
             users.password = await bcrypt.hash(users.password, salt);
             await users.save()
             res.status(200).json({
-                message:'user successfuly', 
-                users,token
+                message: 'user successfuly',
+                users, token
             })
             // res.cookie("token", token, {
             //     expries: new Date(
@@ -93,7 +93,7 @@ exports.isLogin = async (req, res) => {
             const token = user.getJwtToken()
             // console.log(token)
             let userrole = user.role
-           return res.status(200).json({message: 'User added success', user, token, userrole })
+            return res.status(200).json({ message: 'User added success', user, token, userrole })
             // res.send('token', token, {
             //     expries: new Date(
             //         Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
@@ -237,11 +237,21 @@ exports.updatePassword = async (req, res, next) => {
 
 // update user profile
 exports.updateUserProfile = async (req, res) => {
+    const file = req.files.avatar
+    console.log(file)
+    const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+        console.log('resu', result)
+    })
     try {
         const newUserData = {
             name: req.body.name,
-            email: req.body.email
+            email: req.body.email,
+            avatar: {
+                public_id: imageupload.public_id,
+                url: imageupload.secure_url
+            }
         }
+        console.log(req.user.id);
         const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
             new: true,
             // runValidators: true,

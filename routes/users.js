@@ -34,6 +34,9 @@ router.get('/me', isAuthenticated, UserController.getUserDetails)
 
 router.put('/updatepassword', isAuthenticated, UserController.updatePassword)
 
+// router.use(fileUpload({
+//     useTempFiles: true
+// }))
 router.put('/me/updateProfile', isAuthenticated, UserController.updateUserProfile)
 
 router.get('/admin/users', isAuthenticated, authorizeRoles('admin'), UserController.allUser)
