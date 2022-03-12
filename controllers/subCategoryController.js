@@ -1,6 +1,6 @@
 const { SubCategory } = require('../models/subCategories');
 
-exports.addSubCategory = (req, res) => {
+exports.addSubCategory = async(req, res) => {
     try {
         const subCategories = new SubCategory({
             name: req.body.name,
