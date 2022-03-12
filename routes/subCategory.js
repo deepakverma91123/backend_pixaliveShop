@@ -6,14 +6,12 @@ const { isAuthenticated, authorizeRoles } = require('../middleware/Auth')
 
 router.post('/subCategory',isAuthenticated,authorizeRoles('admin'), subCategoryController.addSubCategory)
 
-// router.get('/getcategory', subCategoryController.getCategory)
+router.get('/getSubcategory', subCategoryController.getSubCategory)
 
-// router.put('/category/:id',isAuthenticated, authorizeRoles('admin'), subCategoryController.updateCategory)
+router.put('/subCategory/:id',isAuthenticated, authorizeRoles('admin'), subCategoryController.updateSubCategory)
 
-// router.delete("/deletecategories/:id",isAuthenticated, authorizeRoles('admin'), subCategoryController.deleteCategory)
+router.delete("/deletecategories/:id",isAuthenticated, authorizeRoles('admin'), subCategoryController.deleteSubCategory)
 
-// router.get('/category/:id', subCategoryController.getCategoryById)
-
-
+router.get('/subCategory/:id', subCategoryController.getSubCategoryById)
 
 module.exports = router;
