@@ -7,7 +7,6 @@ exports.categories = async (req, res) => {
         
         const category = new Category({
             name: req.body.name,
-            color: req.body.color,
             icon: req.body.icon,
             image: req.body.image
         })
@@ -58,7 +57,6 @@ exports.updateCategory = async (req, res) => {
         const updateCategory = await Category.findByIdAndUpdate(req.params.id, {
             name: req.body.name,
             icon: req.body.icon,
-            color: req.body.color
         }, {
             new: true
         })
