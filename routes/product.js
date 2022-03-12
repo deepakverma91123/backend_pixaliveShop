@@ -4,7 +4,7 @@ const productController = require('../controllers/ProductController')
 const { isAuthenticated, authorizeRoles } = require('../middleware/Auth')
 // const authenticated = require('../middleware/authenticated')
 // const auth = require('../middleware/authenticated')
-router.post('/product/new' , productController.newproduct)
+router.post('/product/new' ,isAuthenticated, authorizeRoles('admin'), productController.newproduct)
 
 //get all products in homepage
 router.get('/products', productController.Getproduct)

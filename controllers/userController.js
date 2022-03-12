@@ -7,7 +7,7 @@ const sendEmail = require('../utilis/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary').v2
 const multer = require('multer');
-
+const fs = require('fs')
 // const storages = multer.diskStorage({
 //     destination: (req, avatar, callBack) => {
 //         callBack(null, 'uploads')
@@ -28,6 +28,16 @@ exports.registerUser = async (req, res) => {
         const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
             console.log('resu', result)
         })
+
+        fs.unlink(file.tempFilePath, (err) => {
+            if (err) {
+                console.log('err', err)
+            }
+            else {
+                console.log('successfully deleted temp file :' + file);
+            }
+        })
+
         secret = process.env.JWT
         const { name, email, password, role } = req.body;
         let findusers = await User.findOne({ email: req.body.email })
@@ -67,6 +77,14 @@ exports.registerUser = async (req, res) => {
             //     users, token
             // })
         }
+       
+
+
+
+
+
+
+
     } catch (err) {
         res.status(400).json({ mesage: "something went wrong" })
         console.log(err, 'error')
