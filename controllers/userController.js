@@ -244,8 +244,8 @@ exports.updateUserProfile = async (req, res) => {
         }
         const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
             new: true,
-            runValidators: true,
-            useFindAndModify: "false"
+            // runValidators: true,
+            // useFindAndModify: "false"
         })
         if (user) {
             res.status(200).json({ message: "user update sucessfully", user })

@@ -7,6 +7,9 @@ exports.newproduct = async (req, res) => {
     try {
         req.body.user = req.user.id
         const product = await Product.create(req.body)
+        if (!product) {
+            res.status(400).json({message:"failed to add product"})
+        }
         res.status(200).json({ message: "Sucess", product })
     } catch (err) {
         console.log(err)
