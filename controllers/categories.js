@@ -7,7 +7,6 @@ exports.categories = async (req, res) => {
         
         const category = new Category({
             name: req.body.name,
-            color: req.body.color,
             icon: req.body.icon,
             image: req.body.image
         })

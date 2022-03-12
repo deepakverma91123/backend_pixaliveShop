@@ -1,14 +1,32 @@
 const express = require('express')
 const { Category } = require('../models/catergoies')
 const Product = require('../models/products')
-// const ApiFeatures = require('../utilis/apiFeatures')
+const cloudinary = require('cloudinary')
 
 exports.newproduct = async (req, res) => {
     try {
-        req.body.user = req.user.id
+        let images = []
+        if (typeof req.file.images === 'string') {
+            images.push(req.file.images)
+        } else {
+            images = req.file.images
+        }
+        let imagesLinks = [];
+        for (let i = 0; i < images.length; i++) {
+            const result = await cloudinary.v2.uploader.upload(images[i], {
+                folder: 'products'
+            });
+            imagesLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            })
+        }
+        // console.log(req.file.images, images);
+        req.file.images = imagesLinks
+        req.body.user = req.user.id;
         const product = await Product.create(req.body)
         if (!product) {
-            res.status(400).json({message:"failed to add product"})
+            res.status(400).json({ message: "failed to add product" })
         }
         res.status(200).json({ message: "Sucess", product })
     } catch (err) {
@@ -131,8 +149,6 @@ exports.productreview = async (req, res) => {
     }
 }
 
-
-
 exports.sortbyprice = async (req, res) => {
     try {
         // const sortObject = {};
@@ -183,7 +199,7 @@ exports.sortbypriceeq = async (req, res) => {
 
 exports.GetproductById = async (req, res) => {
     try {
-        const getProductId = await Product.findById(req.params.id).populate('category');
+        const getProductId = await Product.findById(req.params.id).populate('category').populate('subCategory');
         if (!getProductId) {
             res.status(400).json({ message: "Product Not Found" })
             return;

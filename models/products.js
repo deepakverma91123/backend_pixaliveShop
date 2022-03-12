@@ -35,23 +35,16 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Category'
     },
-    // category: {
-    //     type: String,
-    //     required: true,
-    //     enum: {
-    //         values: [
-    //             'electronics',
-    //             'cameras',
-    //             'Laptop',
-    //             'Accesssories',
-    //             'Books',
-    //             'food',
-    //             'clothes',
-    //             'Home',
-    //             'others'
-    //         ]
-    //     }
-    // },
+    subCategory: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'SubCategory'
+    },
+    discount: {
+        type: Number
+    },
+    slashPrice: {
+        type: Number
+    },
     seller: {
         type: String,
         required: true
@@ -67,15 +60,12 @@ const productSchema = new mongoose.Schema({
     reviews: [{
         name: {
             type: String,
-            required: true
         },
         rating: {
             type: Number,
-            required: true
         },
         comment: {
             type: String,
-            required: true
         }
     }],
     user: {
@@ -85,7 +75,8 @@ const productSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+
 })
 
 productSchema.index({ request: 'name' });
