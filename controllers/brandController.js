@@ -93,7 +93,7 @@ exports.getAllBrands = async (req, res) => {
             res.status(400).json({ message: "no brands found" })
             return;
         }
-        res.status(200).json({ message: "brand details found", getBrand })
+        res.status(200).json({ message: "brand details found", count: getBrand.length,getBrand })
 
     } catch (err) {
         res.status(500).json({ message: "something went Wrog !" })

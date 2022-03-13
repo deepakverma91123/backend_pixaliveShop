@@ -5,15 +5,16 @@ const categorySchema = mongoose.Schema({
         type: String,
         require: true
     },
-    color: {
-        type: String,
-    },
     icon: {
         type: String
     },
     image: {
         type: String
-    }
+    },
+    subCategory: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'SubCategory'
+    },
 })
 
 
