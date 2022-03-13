@@ -77,6 +77,15 @@ exports.updateProducts = async (req, res) => {
         const product = await Product.findByIdAndUpdate(req.params.id, {
             name: req.body.name,
             description: req.body.description,
+            wishlist: req.body.wishlist,
+            price: req.body.price,
+            description: req.body.description,
+            category: req.body.category,
+            // "seller": "self",
+            stock: req.body.stock,
+            // "numbOfReviews": 2,
+            // "user": "622d90f31dc844dcdbee7620",
+            // "reviews
         }, { new: true })
         if (!product) {
             res.status(400).json({ message: "Product list not avaialble" })

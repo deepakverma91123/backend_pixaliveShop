@@ -77,7 +77,7 @@ exports.registerUser = async (req, res) => {
             //     users, token
             // })
         }
-       
+
 
 
 
@@ -268,6 +268,7 @@ exports.updateUserProfile = async (req, res) => {
                 public_id: imageupload.public_id,
                 url: imageupload.secure_url
             }
+            // avatar:imageupload.secure_url
         }
         console.log(req.user.id);
         const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
@@ -275,8 +276,10 @@ exports.updateUserProfile = async (req, res) => {
             // runValidators: true,
             // useFindAndModify: "false"
         })
+        let avatarUser = user.avatar.url
         if (user) {
-            res.status(200).json({ message: "user update sucessfully", user })
+            console.log(avatarUser);
+            res.status(200).json({ message: "user update sucessfully", user, avatarUser })
         }
     } catch (err) {
         console.log(err)

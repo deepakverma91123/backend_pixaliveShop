@@ -3,22 +3,36 @@ const Product = require('../models/products')
 
 exports.newwishlist = async (req, res) => {
     try {
-        req.body.user = req.user.id
-        const wishlist = await Product.create(req.body)
-        if (!wishlist) {
-            res.status(400).json({message:"failed to add wishlist"})
+
+        let findproduct = await Product.findById(req.params.id)
+        if (!findproduct) {
+            res.status(400).json({ message: "prodcut does not exist" })
+            return;
         }
-        res.status(200).json({ message: "Sucess", wishlist })
+        if (findproduct) {
+            const newUserData = {
+                wishlist: req.body.wishlist,
+                wishlistPrice: req.body.wishlistPrice
+            }
+            console.log(req.user.id)
+            const wishlist = await Product.findByIdAndUpdate(req.user.id, newUserData, {
+                new: true
+            })
+            if (wishlist) {
+                res.status(200).json({message:"wishlist Updated"})
+                return;
+            }
+        }
     } catch (err) {
         console.log(err)
+        res.status(400).json({message:"something Went wrong"})
     }
 }
 
 exports.Getwishlist = async (req, res) => {
     try {
-        const wishlists = await Product.find();
-
-
+        const wishlists = await Product.findById
+        ();
         res.status(200).json({
             message: "Wishlist fetch",
             count: wishlists.length,
@@ -29,8 +43,8 @@ exports.Getwishlist = async (req, res) => {
         console.log(err)
     }
 }
- 
- 
+
+
 exports.deletewishlist = async (req, res) => {
     try {
         const wishlists = await Product.findByIdAndDelete(req.params.id);
@@ -48,12 +62,12 @@ exports.deletewishlist = async (req, res) => {
         console.log(err)
     }
 }
- 
 
 
- 
 
 
- 
 
- 
+
+
+
+

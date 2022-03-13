@@ -39,6 +39,13 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'SubCategory'
     },
+    wishlist:{
+        type:Boolean,
+        default:false
+    },
+    wishlistPrice:{
+        type:Number
+    },
     discount: {
         type: Number
     },
