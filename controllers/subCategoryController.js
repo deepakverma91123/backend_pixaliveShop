@@ -1,4 +1,4 @@
-const { SubCategory } = require('../models/subCategories');
+const  {SubCategory}  = require('../models/subCategories');
 
 exports.addSubCategory = async(req, res) => {
     try {
@@ -8,7 +8,7 @@ exports.addSubCategory = async(req, res) => {
             size: req.body.size,
         })
         await subCategories.save()
-        res.status(200).json({ message: "categoy saved sucessfull", subCategories })
+        res.status(200).json({ message: "Sub Category saved sucessfull", subCategories })
     } catch (err) {
         console.log(err);
     }
@@ -39,7 +39,7 @@ exports.getSubCategoryById = async (req, res) => {
             res.status(400).json({ message: "failed to fetch data" })
             return;
         }
-        res.status(200).json({ message: "category Fetch sucessfully", subCategoryById })
+        res.status(200).json({ message: "SubCategory Fetch sucessfully", subCategoryById })
     }
     catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
@@ -57,7 +57,7 @@ exports.updateSubCategory = async (req, res) => {
             new: true
         })
         if (!updateSubCategory) {
-            res.status(400).json({ message: "not able to update category" })
+            res.status(400).json({ message: "not able to update subcategory" })
             return;
         }
         res.status(200).json({ message: "update sucessfully", updateSubCategory })

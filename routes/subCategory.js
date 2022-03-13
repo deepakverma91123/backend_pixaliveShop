@@ -10,7 +10,7 @@ router.get('/getSubcategory', subCategoryController.getSubCategory)
 
 router.put('/subCategory/:id',isAuthenticated, authorizeRoles('admin'), subCategoryController.updateSubCategory)
 
-router.delete("/deletecategories/:id",isAuthenticated, authorizeRoles('admin'), subCategoryController.deleteSubCategory)
+router.delete("/subCategoryDelete/:id",isAuthenticated, authorizeRoles('admin'), subCategoryController.deleteSubCategory)
 
 router.get('/subCategory/:id', subCategoryController.getSubCategoryById)
 

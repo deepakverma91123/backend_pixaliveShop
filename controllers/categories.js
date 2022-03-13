@@ -22,7 +22,7 @@ exports.categories = async (req, res) => {
 exports.getCategory = async (req, res) => {
     try {
         console.log(req)
-        const categoryList = await Category.find();
+        const categoryList = await Category.find().populate('SubCategory');
         console.log(categoryList)
         if (!categoryList) {
             res.status(400).json({ message: "Category lIst not found" });
