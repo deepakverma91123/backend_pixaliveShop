@@ -5,24 +5,24 @@ const cloudinary = require('cloudinary')
 
 exports.newproduct = async (req, res) => {
     try {
-        let images = []
-        if (typeof req.file.images === 'string') {
-            images.push(req.file.images)
-        } else {
-            images = req.file.images
-        }
-        let imagesLinks = [];
-        for (let i = 0; i < images.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(images[i], {
-                folder: 'products'
-            });
-            imagesLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url
-            })
-        }
-        // console.log(req.file.images, images);
-        req.file.images = imagesLinks
+        // let images = []
+        // if (typeof req.file.images === 'string') {
+        //     images.push(req.file.images)
+        // } else {
+        //     images = req.file.images
+        // }
+        // let imagesLinks = [];
+        // for (let i = 0; i < images.length; i++) {
+        //     const result = await cloudinary.v2.uploader.upload(images[i], {
+        //         folder: 'products'
+        //     });
+        //     imagesLinks.push({
+        //         public_id: result.public_id,
+        //         url: result.secure_url
+        //     })
+        // }
+        // // console.log(req.file.images, images);
+        // req.file.images = imagesLinks
         req.body.user = req.user.id;
         const product = await Product.create(req.body)
         if (!product) {
@@ -36,7 +36,7 @@ exports.newproduct = async (req, res) => {
 
 exports.Getproduct = async (req, res) => {
     try {
-        const products = await Product.find();
+        const products = await Product.find().populate('category').populate('subCategory');
 
 
         res.status(200).json({
