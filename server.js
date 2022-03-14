@@ -18,6 +18,7 @@ require("dotenv").config();
 
 app.use(cookieParser());
 app.use(express.json())
+app.use(fileUpload());
 app.use(cors())
 // app.use(fileUpload({
 //     useTempFiles: true

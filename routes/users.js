@@ -14,9 +14,9 @@ const storage = multer.diskStorage({
         callBack(null, `${file.originalname}`)
     }
 })
-router.use(fileUpload({
-    useTempFiles: true
-}))
+// router.use(fileUpload({
+//     useTempFiles: true
+// }))
 router.post('/register', UserController.registerUser)
  
 
@@ -35,7 +35,7 @@ router.get('/me', isAuthenticated, UserController.getUserDetails)
 router.put('/updatepassword', isAuthenticated, UserController.updatePassword)
 
 // router.use(fileUpload({
-//     useTempFiles: true
+//     // useTempFiles: true
 // }))
 router.put('/me/updateProfile', isAuthenticated, UserController.updateUserProfile)
 

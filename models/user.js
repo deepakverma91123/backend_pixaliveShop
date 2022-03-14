@@ -27,9 +27,9 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     },
-    // avatar:{
+    // url:{
     //     type:String,
-    //     required:true
+    //     // required:true
     // },
     role: {
         type: String,

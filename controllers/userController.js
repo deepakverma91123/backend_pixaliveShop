@@ -19,45 +19,88 @@ const fs = require('fs')
 
 // const upload = multer({ storage: storage })
 exports.registerUser = async (req, res) => {
+    // try {
+    //     // console.log(req.body)
+    //     const file = req.files.avatar
+    //     console.log(file)
+
+
+    //     const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    //         console.log('resu', result)
+    //     })
+
+    //     fs.unlink(file.tempFilePath, (err) => {
+    //         if (err) {
+    //             console.log('err', err)
+    //         }
+    //         else {
+    //             console.log('successfully deleted temp file :' + file);
+    //         }
+    //     })
+
+    //     secret = process.env.JWT
+    //     const { name, email, password, role, url } = req.body;
+    //     let findusers = await User.findOne({ email: req.body.email })
+    //     if (findusers) {
+    //         res.status(401).json('users already present')
+    //         return;
+    //     }
+    //     const users = await User.create({
+    //         name,
+    //         email,
+    //         password,
+    //         avatar: {
+    //             public_id: imageupload.public_id,
+    //             url: imageupload.secure_url
+    //         },
+    //         // url,
+    //         role
+    //     })
+    //     if (!users) {
+    //         res.status(400).json({ messgae: "Failed to fetch user" })
+    //         return;
+    //     }
+    //     if (users) {
+    //         const token = users.getJwtToken()
+    //         console.log(token)
+    //         const salt = await bcrypt.genSalt(10);
+    //         users.password = await bcrypt.hash(users.password, salt);
+    //         await users.save()
+    //         res.status(200).json({
+    //             message: 'user successfuly',
+    //             users, token
+    //         })
+    //         // res.cookie("token", token, {
+    //         //     expries: new Date(
+    //         //         Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
+    //         //     ), httpOnly: true
+    //         // }).json({
+    //         //     message: true,
+    //         //     users, token
+    //         // })
+    //     }
+    // } catch (err) {
+    //     res.status(400).json({ mesage: "something went wrong" })
+    //     console.log(err, 'error')
+    // }
     try {
-        console.log(req.body)
-        const file = req.files.avatar
-        console.log(file)
-
-
-        const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-            console.log('resu', result)
+        const result = await cloudinary.uploader.upload(req.body.avatar, {
+            folder: 'backendapi',
+            width: 150,
+            crop: "scale"
         })
 
-        fs.unlink(file.tempFilePath, (err) => {
-            if (err) {
-                console.log('err', err)
-            }
-            else {
-                console.log('successfully deleted temp file :' + file);
-            }
-        })
+        const { name, email, password,role } = req.body;
 
-        secret = process.env.JWT
-        const { name, email, password, role } = req.body;
-        let findusers = await User.findOne({ email: req.body.email })
-        if (findusers) {
-            res.status(401).json('users already present')
-            return;
-        }
         const users = await User.create({
             name,
             email,
             password,
             avatar: {
-                public_id: imageupload.public_id,
-                url: imageupload.secure_url
-            }, role
+                public_id: result.public_id,
+                url: result.secure_url
+            },role
         })
-        if (!users) {
-            res.status(400).json({ messgae: "Failed to fetch user" })
-            return;
-        }
         if (users) {
             const token = users.getJwtToken()
             console.log(token)
@@ -77,17 +120,9 @@ exports.registerUser = async (req, res) => {
             //     users, token
             // })
         }
-
-
-
-
-
-
-
-
+        // sendToken(user, 200, res)
     } catch (err) {
-        res.status(400).json({ mesage: "something went wrong" })
-        console.log(err, 'error')
+        console.log(err)
     }
 }
 
@@ -255,36 +290,47 @@ exports.updatePassword = async (req, res, next) => {
 
 // update user profile
 exports.updateUserProfile = async (req, res) => {
-    const file = req.files.avatar
-    console.log(file)
-    const imageupload = await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-        console.log('resu', result)
-    })
+    // console.log(req)
     try {
         const newUserData = {
             name: req.body.name,
-            email: req.body.email,
-            avatar: {
-                public_id: imageupload.public_id,
-                url: imageupload.secure_url
-            }
-            // avatar:imageupload.secure_url
+            email: req.body.email
         }
-        console.log(req.user.id);
+    
+        // Update avatar
+        if (req.body.avatar !== '') {
+            const user = await User.findById(req.user.id)
+    
+            const image_id = user.avatar.public_id;
+            const res = await cloudinary.uploader.destroy(image_id);
+    
+            const result = await cloudinary.uploader.upload(req.body.avatar, {
+                folder: 'avatars',
+                width: 150,
+                crop: "scale"
+            })
+    
+            newUserData.avatar = {
+                public_id: result.public_id,
+                url: result.secure_url
+            }
+        }
+    
         const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
             new: true,
-            // runValidators: true,
-            // useFindAndModify: "false"
+            runValidators: true,
+            useFindAndModify: false
         })
-        let avatarUser = user.avatar.url
-        if (user) {
-            console.log(avatarUser);
-            res.status(200).json({ message: "user update sucessfully", user, avatarUser })
-        }
+    
+        res.status(200).json({
+            success: true,
+            user
+        })
+
     } catch (err) {
         console.log(err)
-        res.status(400).json({ messgae: "something went wrong " })
     }
+
 }
 
 // get all user by admin
