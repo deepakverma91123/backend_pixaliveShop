@@ -5,6 +5,7 @@ exports.newwishlist = async (req, res) => {
     try {
 
         let findproduct = await Product.findById(req.params.id)
+        console.log(findproduct)
         if (!findproduct) {
             res.status(400).json({ message: "prodcut does not exist" })
             return;
@@ -14,10 +15,11 @@ exports.newwishlist = async (req, res) => {
                 wishlist: req.body.wishlist,
                 wishlistPrice: req.body.wishlistPrice
             }
-            console.log(req.user.id)
-            const wishlist = await Product.findByIdAndUpdate(req.user.id, newUserData, {
+            // console.log(req.user.id)
+            const wishlist = await Product.findByIdAndUpdate(req.params.id, newUserData, {
                 new: true
             })
+            console.log(wishlist)
             if (wishlist) {
                 res.status(200).json({message:"wishlist Updated"})
                 return;

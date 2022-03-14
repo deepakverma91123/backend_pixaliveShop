@@ -11,7 +11,7 @@ router.get('/products', productController.Getproduct)
 
 router.get('/products/search/:name', productController.search)
 // sort by price 
-router.put('/product/:id', isAuthenticated, productController.updateProducts)
+router.put('/product/:id', isAuthenticated, authorizeRoles('admin'), productController.updateProducts)
 
 
 router.get('/productsid/:id', productController.GetproductById)
