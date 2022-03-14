@@ -23,6 +23,8 @@ router.get('/products/sortbyprice/:price', productController.sortbyprice)
 //gt
 router.get('/products/sortbypriceeq/:price', productController.sortbypriceeq)
 
+//gt
+router.get('/products/sortbypricetwo', productController.lessthensortbyprice)
 
 
 

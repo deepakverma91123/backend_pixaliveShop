@@ -206,6 +206,34 @@ exports.sortbypriceeq = async (req, res) => {
     }
 }
 
+exports.lessthensortbyprice = async (req, res) => {
+    try {
+        const sortObject = {};
+        const p = req.query.price
+        const s = req.query.prices
+
+        console.log('p',p)
+        console.log('s',s)
+
+        const pricedatafilter = await Product.find({ price: { $lte: p,$gte:s } }).select({ price: 1, name: 1 }).sort({ price: -1 });
+        console.log(pricedatafilter)
+
+        // this.products.filter(res => {
+        //     console.log(res)
+        // })
+        res.status(200).json({
+            message: "Sort By Price",
+
+            pricedatafilter
+
+        })
+
+    } catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
+        console.log(err)
+    }
+}
+
 exports.GetproductById = async (req, res) => {
     try {
         const getProductId = await Product.findById(req.params.id).populate('category').populate('subCategory');
