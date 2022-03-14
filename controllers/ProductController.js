@@ -215,7 +215,7 @@ exports.lessthensortbyprice = async (req, res) => {
         console.log('p',p)
         console.log('s',s)
 
-        const pricedatafilter = await Product.find({ price: { $lte: p,$gte:s } }).select({ price: 1, name: 1 }).sort({ price: -1 });
+        const pricedatafilter = await Product.find({ price: { $gt:p,$lt:s} }).select({ price: 1, name: 1 }).sort({ price: -1 });
         console.log(pricedatafilter)
 
         // this.products.filter(res => {
