@@ -27,8 +27,6 @@ router.get('/products/sortbypriceeq/:price', productController.sortbypriceeq)
 router.get('/products/sortbypricetwo', productController.lessthensortbyprice)
 
 
-
-
 router.get('/getproductcategory/:id', productController.getListByCategory);
 // product review 
 router.get('/productreview/:id', productController.productreview);

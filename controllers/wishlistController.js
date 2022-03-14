@@ -33,11 +33,10 @@ exports.newwishlist = async (req, res) => {
 
 exports.Getwishlist = async (req, res) => {
     try {
-        const wishlists = await Product.findById
-        ();
+        const wishlists = await Product.find();
         res.status(200).json({
             message: "Wishlist fetch",
-            count: wishlists.length,
+            // count: wishlists.length,
             wishlists
 
         })

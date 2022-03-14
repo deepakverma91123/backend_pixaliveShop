@@ -39,6 +39,9 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'SubCategory'
     },
+    // cart{
+    //     type:
+    // },
     wishlist:{
         type:Boolean,
         default:false
