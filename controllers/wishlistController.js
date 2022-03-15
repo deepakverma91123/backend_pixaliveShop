@@ -21,7 +21,7 @@ exports.newwishlist = async (req, res) => {
             })
             console.log(wishlist)
             if (wishlist) {
-                res.status(200).json({message:"wishlist Updated"})
+                res.status(200).json({message:"wishlist Updated",wishlist})
                 return;
             }
         }

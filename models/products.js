@@ -52,6 +52,9 @@ const productSchema = new mongoose.Schema({
     discount: {
         type: Number
     },
+    qty:{
+        type:Number
+    },
     slashPrice: {
         type: Number
     },

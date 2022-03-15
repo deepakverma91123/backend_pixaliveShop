@@ -8,6 +8,7 @@ const order = require('./routes/order')
 const Category = require('./routes/category')
 const Wishlists = require('./routes/wishlist')
 const subCategory = require('./routes/subCategory')
+const Cart = require('./routes/cart')
 
 const cloudinary = require('cloudinary')
 const multer = require('multer')
@@ -41,7 +42,7 @@ app.use('/api', barndRoutes)
 app.use('/api', Wishlists)
 app.use('/api',barndRoutes)
 app.use('/api',subCategory)
-
+app.use('/api',Cart)
 // schemaName.index({ request: 'text' });
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
