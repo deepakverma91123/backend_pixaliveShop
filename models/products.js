@@ -44,7 +44,7 @@ const productSchema = new mongoose.Schema({
     // },
     wishlist:{
         type:Boolean,
-        default:false
+        default:"false"
     },
     wishlistPrice:{
         type:Number
