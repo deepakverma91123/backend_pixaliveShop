@@ -21,7 +21,6 @@ exports.getSubCategory = async (req, res) => {
         console.log(subCategoryList)
         if (!subCategoryList) {
             res.status(400).json({ message: "SubCategory lIst not found" });
-           
             return;
         }
         res.status(200).json({ message: "SubCategory list", subCategoryList })

@@ -2,16 +2,6 @@ const Cart = require('../models/cart')
 const Products = require('../models/products')
 exports.addCart = async (req, res) => {
     try {
-        // const { productId, quantity, name, price } = req.body;
-        // const carts = Cart.findById({ user: req.user.id })
-
-        // console.log('carts', carts);
-        // let userId = req.user.id
-        // console.log(userId)
-
-        // let cart = await Cart.findOne({ userId });
-
-
         const productFind = await Products.findById(req.body.productId)
 
         // console.log(productFind, 'redrs')
@@ -43,7 +33,11 @@ exports.addCart = async (req, res) => {
         )
         console.log(cartAdd)
         res.status(200).json({ message: "Cart created ", cartAdd })
-
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: "something went wrong" })
+    }
+}
 exports.getCart = async (req, res) => {
 
     try {
