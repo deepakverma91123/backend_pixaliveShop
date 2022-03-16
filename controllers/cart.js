@@ -1,25 +1,43 @@
-const Product = require('../models/products')
-
-
-exports.AddCart = async (req, res) => {
+const Cart = require('../models/cart')
+const Products = require('../models/products')
+exports.addCart = async (req, res) => {
     try {
-        let findproduct = await Product.findById(req.params.id)
-        if (!findproduct) {
-            res.status(400).json({ message: "No product FOund for this ID" })
-            return;
+        // const { productId, quantity, name, price } = req.body;
+
+        let userId = req.user.id
+        // console.log(userId)
+        let cart = await Cart.findOne({ userId });
+
+        if (cart) {
+            const productFind = await Products.findOne({ productId: req.body.id })
+            // console.log(productFind, 'redrs')
+            // const products = []
+            const Productname = productFind.name
+            const productId = productFind.id
+            const productprice = productFind.price
+            const quantity = req.body.quantity
+
+            const totalSub = productprice * quantity
+
+            // products.push(Productname, productId, totalSub, quantity, productprice)
+
+            // console.log(products, 'pro')
+            const cartAdd = await Cart.create({
+                cart: {
+                    userId:req.user.id,
+                    productId:req.body.productId,
+                    quantity: req.body.quantity,
+                    name:  productFind.name,
+                    price: totalSub
+                    // products
+                }
+            })
+            console.log(cartAdd)
+            res.status(200).json({message:"Cart created ",cartAdd})
+
         }
-        console.log(findproduct,'products')
-        if (findproduct) {
-           
-         let pricedata = findproduct.price
-         console.log(pricedata)       
-        let qty = req.body.qty
-        
-        let cal = qty* pricedata
-        console.log(cal)
-            res.status(200).json({message:"FInal price of product",cal})
-        }
-    } catch {
-        console.log(err)
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Something went wrong");
     }
 }

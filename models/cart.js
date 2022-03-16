@@ -1,17 +1,34 @@
-// const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-// const subCategorySchema = mongoose.Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     color: {
-//         type: String,
-//     },
-//     size: {
-//         type: String
-//     }
-// })
+const CartSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User"
+    },
+    cart: [
+      {
+        productId: String,
+        quantity: Number,
+        name: String,
+        price: Number
+      }
+    ],
+    products:{
+      type:mongoose.Schema.ObjectId,
+      ref:"Products"
+    },
+    active: {
+      type: Boolean,
+      default: true
+    },
+    modifiedOn: {
+      type: Date,
+      default: Date.now
+    }
+  },
+  { timestamps: true }
+);
 
+module.exports = mongoose.model("Cart", CartSchema);
 
-// module.exports.SubCategory = mongoose.model('SubCategory', subCategorySchema)
