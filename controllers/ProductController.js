@@ -36,6 +36,7 @@ exports.newproduct = async (req, res) => {
 
 exports.Getproduct = async (req, res) => {
     try {
+        
         const products = await Product.find().populate('category').populate('subCategory');
 
 
@@ -123,7 +124,7 @@ exports.getListByCategory = async (req, res) => {
         // }
         const categoryById = await Category.findById(req.params.id);
         console.log(categoryById)
-
+        
         const getListByCategory = await Product.find({ category: categoryById });
         if (!getListByCategory) {
             res.status(400).json({ message: "cant find data" })

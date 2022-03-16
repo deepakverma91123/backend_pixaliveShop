@@ -8,6 +8,7 @@ exports.addCart = async (req, res) => {
         // console.log('carts', carts);
         // let userId = req.user.id
         // console.log(userId)
+
         // let cart = await Cart.findOne({ userId });
 
 
@@ -42,16 +43,6 @@ exports.addCart = async (req, res) => {
         )
         console.log(cartAdd)
         res.status(200).json({ message: "Cart created ", cartAdd })
-
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).send("Something went wrong");
-    }
-}
-
-
-
 
 exports.getCart = async (req, res) => {
 
