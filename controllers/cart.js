@@ -3,41 +3,67 @@ const Products = require('../models/products')
 exports.addCart = async (req, res) => {
     try {
         // const { productId, quantity, name, price } = req.body;
+        // const carts = Cart.findById({ user: req.user.id })
 
-        let userId = req.user.id
+        // console.log('carts', carts);
+        // let userId = req.user.id
         // console.log(userId)
-        let cart = await Cart.findOne({ userId });
 
-        if (cart) {
-            const productFind = await Products.findOne({ productId: req.body.id })
-            // console.log(productFind, 'redrs')
-            const products = []
-            const Productname = productFind.name
-            const productId = productFind.id
-            const productprice = productFind.price
-            const quantity = req.body.quantity
+        // let cart = await Cart.findOne({ userId });
 
-            const totalSub = productprice * quantity
 
-            products.push(Productname, productId, totalSub, quantity, productprice)
+        const productFind = await Products.findById(req.body.productId)
 
-            console.log(products, 'pro')
-            const cartAdd = await Cart.create({
-                cart: {
-                    userId:req.user.id,
-                    // productId:req.body.id,
-                    quantity: req.body.quantity,
-                    name:  productFind.name,
-                    price: totalSub
-                    // products
-                }
-            })
-            console.log(cartAdd)
-            res.status(200).json({message:"Cart created ",cartAdd})
+        // console.log(productFind, 'redrs')
+        // const products = []
+        const Productname = productFind.name
+        const productId = productFind.id
+        const productprice = productFind.price
+        const quantity = req.body.quantity
 
+        const totalSub = productprice * quantity
+
+        // products.push(Productname, productId, totalSub, quantity, productprice)
+
+        // console.log(products, 'pro')
+        req.body.userId = req.user.id;
+        console.log(req.body.userId)
+        const cartAdd = await Cart.create(
+            req.body
+
+            // cart: {
+            //     // userId: carts,
+            //     userId: req.user.id,
+            //     productId: req.body.productId,
+            //     quantity: req.body.quantity,
+            //     name: productFind.name,
+            //     price: totalSub
+            //     // products
+            // }
+        )
+        console.log(cartAdd)
+        res.status(200).json({ message: "Cart created ", cartAdd })
+
+exports.getCart = async (req, res) => {
+
+    try {
+        const cartList = await Cart.find();
+        console.log(cartList)
+
+        if (!cartList) {
+            res.status(400).json({ message: "cartList   not found" });
+
+            return;
         }
-    } catch (err) {
-        console.log(err);
-        res.status(500).send("Something went wrong");
+        res.status(200).json({ message: "cartList ", cartList })
     }
+    catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
+        console.log(err)
+    }
+
+
+
+
+
 }
