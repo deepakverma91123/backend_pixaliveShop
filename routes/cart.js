@@ -7,4 +7,6 @@ const { isAuthenticated } = require('../middleware/Auth')
 router.post('/addtocart',isAuthenticated,cartController.addCart)
 
 
+router.get('/getcart',isAuthenticated,cartController.getCart)
+
 module.exports = router
