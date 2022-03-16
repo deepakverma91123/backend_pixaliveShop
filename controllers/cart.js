@@ -11,7 +11,7 @@ exports.addCart = async (req, res) => {
         if (cart) {
             const productFind = await Products.findOne({ productId: req.body.id })
             // console.log(productFind, 'redrs')
-            // const products = []
+            const products = []
             const Productname = productFind.name
             const productId = productFind.id
             const productprice = productFind.price
@@ -19,13 +19,13 @@ exports.addCart = async (req, res) => {
 
             const totalSub = productprice * quantity
 
-            // products.push(Productname, productId, totalSub, quantity, productprice)
+            products.push(Productname, productId, totalSub, quantity, productprice)
 
-            // console.log(products, 'pro')
+            console.log(products, 'pro')
             const cartAdd = await Cart.create({
                 cart: {
                     userId:req.user.id,
-                    productId:req.body.productId,
+                    // productId:req.body.id,
                     quantity: req.body.quantity,
                     name:  productFind.name,
                     price: totalSub
