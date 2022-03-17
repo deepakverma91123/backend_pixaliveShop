@@ -8,6 +8,6 @@ router.post('/addtocart',isAuthenticated,cartController.addCart)
 
 router.get('/getcart',isAuthenticated,cartController.getCart)
 
-router.put('/updatecart/:id',isAuthenticated,cartController.updateCart)
+// router.put('/updatecart/:id',isAuthenticated,cartController.updateCart)
 
 module.exports = router
