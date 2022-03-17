@@ -4,7 +4,7 @@ exports.addCart = async (req, res) => {
     try {
         const productFind = await Products.findById(req.body.productId)
 
-        // console.log(productFind, 'redrs')
+        console.log(productFind, 'redrs')
         // const products = []
         const Productname = productFind.name
         const productId = productFind.id
@@ -13,24 +13,17 @@ exports.addCart = async (req, res) => {
 
         const totalSub = productprice * quantity
 
-        // products.push(Productname, productId, totalSub, quantity, productprice)
-
-        // console.log(products, 'pro')
         req.body.userId = req.user.id;
         console.log(req.body.userId)
-        const cartAdd = await Cart.create(
-            req.body
-
-            // cart: {
-            //     // userId: carts,
-            //     userId: req.user.id,
-            //     productId: req.body.productId,
-            //     quantity: req.body.quantity,
-            //     name: productFind.name,
-            //     price: totalSub
-            //     // products
-            // }
-        )
+        const cartAdd = await Cart.create({
+            userId: req.user.id,
+            cart: {
+                productId: productFind.id,
+                quantity: req.body.quantity                ,
+                name: productFind.name,
+                price: totalSub
+            }
+        })
         console.log(cartAdd)
         res.status(200).json({ message: "Cart created ", cartAdd })
     } catch (err) {
@@ -49,15 +42,30 @@ exports.getCart = async (req, res) => {
 
             return;
         }
-        res.status(200).json({ message: "cartList ", cartList })
+        res.status(200).json({ message: "cartList ",count:cartList.length, cartList })
     }
     catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)
     }
+}
 
-
-
-
-
+exports.updateCart = async (req, res) => {
+    try {
+        req.body.userId = req.user.id;
+        const data = req.body
+        const updatecart = await Cart.findByIdAndUpdate(req.params.id, {
+            data
+        }, {
+            new: true
+        })
+        if (!updatecart) {
+            res.status(400).json({ message: "Cannot update the cart" })
+            return;
+        }
+        res.status(200).json({ message: "cart update", updatecart })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: "something went wrong" })
+    }
 }

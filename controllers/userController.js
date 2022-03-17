@@ -77,13 +77,19 @@ exports.registerUser = async (req, res) => {
     //     console.log(err, 'error')
     // }
     try {
+
+        let findusers = await User.findOne({ email: req.body.email })
+            if (findusers) {
+                res.status(401).json('users already present')
+                return;
+            }
         const result = await cloudinary.uploader.upload(req.body.avatar, {
             folder: 'backendapi',
             width: 150,
             crop: "scale"
         })
 
-        const { name, email, password,role } = req.body;
+        const { name, email, password, role } = req.body;
 
         const users = await User.create({
             name,
@@ -92,7 +98,7 @@ exports.registerUser = async (req, res) => {
             avatar: {
                 public_id: result.public_id,
                 url: result.secure_url
-            },role
+            }, role
         })
         if (users) {
             const token = users.getJwtToken()
@@ -289,32 +295,32 @@ exports.updateUserProfile = async (req, res) => {
             name: req.body.name,
             email: req.body.email
         }
-    
+
         // Update avatar
         if (req.body.avatar !== '') {
             const user = await User.findById(req.user.id)
-    
+
             const image_id = user.avatar.public_id;
             const res = await cloudinary.uploader.destroy(image_id);
-    
+
             const result = await cloudinary.uploader.upload(req.body.avatar, {
                 folder: 'avatars',
                 width: 150,
                 crop: "scale"
             })
-    
+
             newUserData.avatar = {
                 public_id: result.public_id,
                 url: result.secure_url
             }
         }
-    
+
         const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
             new: true,
             runValidators: true,
             useFindAndModify: false
         })
-    
+
         res.status(200).json({
             success: true,
             user
