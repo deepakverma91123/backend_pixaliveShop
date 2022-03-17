@@ -36,9 +36,10 @@ exports.newproduct = async (req, res) => {
 
 exports.Getproduct = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
-        const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
-        const products = await Product.find().populate('category').populate('subCategory').limit(limit).skip(skip);
+        // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+        // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
+        const products = await Product.find().populate('category').populate('subCategory')
+        // .limit(limit).skip(skip);
 
 
         res.status(200).json({
@@ -123,10 +124,11 @@ exports.getListByCategory = async (req, res) => {
         const categoryById = await Category.findById(req.params.id);
         console.log(categoryById)
         
-        const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
-        const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
+        // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+        // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
 
-        const getListByCategory = await Product.find({ category: categoryById }).limit(limit).skip(skip);
+        const getListByCategory = await Product.find({ category: categoryById })
+        // .limit(limit).skip(skip);
         if (!getListByCategory) {
             res.status(400).json({ message: "cant find data" })
             return;
@@ -240,10 +242,11 @@ exports.GetproductById = async (req, res) => {
     try {
 
          
-        const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
-        const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
+        // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+        // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
 
-        const getProductId = await Product.findById(req.params.id).populate('category').populate('subCategory').limit(limit).skip(skip);
+        const getProductId = await Product.findById(req.params.id).populate('category').populate('subCategory')
+        // .limit(limit).skip(skip);
         if (!getProductId) {
             res.status(400).json({ message: "Product Not Found" })
             return;
