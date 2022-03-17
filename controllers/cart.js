@@ -50,22 +50,22 @@ exports.getCart = async (req, res) => {
     }
 }
 
-exports.updateCart = async (req, res) => {
-    try {
-        req.body.userId = req.user.id;
-        const data = req.body
-        const updatecart = await Cart.findByIdAndUpdate(req.params.id, {
-            data
-        }, {
-            new: true
-        })
-        if (!updatecart) {
-            res.status(400).json({ message: "Cannot update the cart" })
-            return;
-        }
-        res.status(200).json({ message: "cart update", updatecart })
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({ message: "something went wrong" })
-    }
-}
+// exports.updateCart = async (req, res) => {
+//     try {
+//         req.body.userId = req.user.id;
+//         const data = req.body
+//         const updatecart = await Cart.findByIdAndUpdate(req.params.id, {
+//             data
+//         }, {
+//             new: true
+//         })
+//         if (!updatecart) {
+//             res.status(400).json({ message: "Cannot update the cart" })
+//             return;
+//         }
+//         res.status(200).json({ message: "cart update", updatecart })
+//     } catch (err) {
+//         console.log(err)
+//         res.status(500).json({ message: "something went wrong" })
+//     }
+// }
