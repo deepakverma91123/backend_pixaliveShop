@@ -19,7 +19,7 @@ exports.addCart = async (req, res) => {
             userId: req.user.id,
             cart: {
                 productId: productFind.id,
-                quantity: req.body.quantity                ,
+                quantity: req.body.quantity,
                 name: productFind.name,
                 price: totalSub
             }
@@ -42,12 +42,30 @@ exports.getCart = async (req, res) => {
 
             return;
         }
-        res.status(200).json({ message: "cartList ",count:cartList.length, cartList })
+        res.status(200).json({ message: "cartList ", count: cartList.length, cartList })
     }
     catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)
     }
+}
+
+
+
+exports.deletecart = async (req, res) => {
+
+    try {
+        const deletecart = await Cart.findByIdAndDelete(req.params.id)
+        if (!deletecart) {
+            res.status(400).json({ message: "cart data notfound" })
+            return;
+        }
+        res.status(200).json({ message: "cart Delete Sucessfully" })
+    } catch (err) {
+
+    }
+
+
 }
 
 // exports.updateCart = async (req, res) => {
