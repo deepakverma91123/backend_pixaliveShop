@@ -2,12 +2,12 @@ const Cart = require('../models/cart')
 const Products = require('../models/products')
 exports.addCart = async (req, res) => {
     try {
-        const productFind = await Products.findById(req.body.productId)
+        const productFind = await Products.findById(req.params.id)
 
         console.log(productFind, 'redrs')
         // const products = []
         const Productname = productFind.name
-        const productId = productFind.id
+        // const productId = productFind.id
         const productprice = productFind.price
         const quantity = req.body.quantity
 
@@ -18,10 +18,10 @@ exports.addCart = async (req, res) => {
         const cartAdd = await Cart.create({
             userId: req.user.id,
             cart: {
-                productId: productFind.id,
+                // productId: productFind.id,
                 quantity: req.body.quantity                ,
                 name: productFind.name,
-                price: totalSub
+                price: productFind.price
             }
         })
         console.log(cartAdd)

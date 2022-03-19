@@ -4,7 +4,7 @@ const cartController = require('../controllers/cart')
 const { isAuthenticated } = require('../middleware/Auth')
 
 
-router.post('/addtocart',isAuthenticated,cartController.addCart)
+router.post('/addtocart/:id',isAuthenticated,cartController.addCart)
 
 router.get('/getcart',isAuthenticated,cartController.getCart)
 
