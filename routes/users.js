@@ -24,7 +24,7 @@ router.post('/register', UserController.registerUser)
 
 router.post('/login', UserController.isLogin)
 
-router.get('/logout', UserController.Logout)
+router.put('/logout', UserController.Logout)
 
 router.post('/forgetpasssword', UserController.forgotPassword)
 

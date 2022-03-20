@@ -4,7 +4,7 @@ const productController = require('../controllers/ProductController')
 const { isAuthenticated, authorizeRoles } = require('../middleware/Auth')
 // const authenticated = require('../middleware/authenticated')
 // const auth = require('../middleware/authenticated')
-router.post('/product/new' ,isAuthenticated, authorizeRoles('admin'), productController.newproduct)
+router.post('/product/new' ,isAuthenticated, authorizeRoles('admin','seller'), productController.newproduct)
 
 //get all products in homepage
 router.get('/products', productController.Getproduct)
@@ -34,6 +34,8 @@ router.get('/productreview/:id', productController.productreview);
 // promotion 
 router.get('/productpromotion/:id', productController.Promotion);
 
+// get product by user id
+router.get('/product/seller', isAuthenticated, productController.getProductByUserId)
 
 
 // 

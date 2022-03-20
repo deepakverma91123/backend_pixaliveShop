@@ -31,9 +31,9 @@ const userSchema = new mongoose.Schema({
     //     type:String,
     //     // required:true
     // },
-    // Cart:{
+    // product:{
     //     type:mongoose.Schema.objectId,
-    //     ref:'Cart'
+    //     ref:'Products'
     // },
     role: {
         type: String,
@@ -66,4 +66,13 @@ userSchema.methods.reset = function () {
     this.resetpasswordExpire = Date.now() + 30 * 60 * 1000
     return resetToken;
 }
+
+// userSchema.methods.deleteToken=function(token,cb){
+//     var user=this;
+
+//     user.update({$unset : {token :1}},function(err,user){
+//         if(err) return cb(err);
+//         cb(null,user);
+//     })
+// }
 module.exports = mongoose.model('User', userSchema)

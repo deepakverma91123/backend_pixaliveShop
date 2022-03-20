@@ -36,12 +36,16 @@ exports.newproduct = async (req, res) => {
 
 exports.Getproduct = async (req, res) => {
     try {
+        // const userParam = req.body.id
         // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
         // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
-        const products = await Product.find().populate('category').populate('subCategory')
+        const products = await Product.find().populate('category').populate('subCategory').populate('user')
         // .limit(limit).skip(skip);
+        // console.log('Not working', products, userParam);
 
-
+        // if (userParam == products.user.id) {
+        //     console.log('WOrking', products.user.id, userParam);
+        // }
         res.status(200).json({
             message: "Product fetch",
             count: products.length,
@@ -272,5 +276,20 @@ exports.Promotion = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: "Something went wrong" })
         console.log(err)
+    }
+}
+
+exports.getProductByUserId = async (req, res) => {
+    try {
+        console.log(req.user.id, 'userId')
+        const productsByUserId = await Product.find({ user: req.user._id })
+        console.log(productsByUserId, 'produccts')
+        if (!productsByUserId) {
+            res.status(400).json({ message: "you have no productsByUserId" })
+            return;
+        }
+        res.status(200).json({ message: "Products", count: productsByUserId.length , productsByUserId })
+    } catch (error) {
+        console.log(error);
     }
 }

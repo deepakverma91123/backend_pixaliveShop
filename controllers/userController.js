@@ -163,15 +163,15 @@ exports.isLogin = async (req, res) => {
 
 exports.Logout = async (req, res) => {
     try {
-        res.clearCookie('token', null, {
-            expries: new Date(Date.now()),
-            httpOnly: true
-        })
-        res.status(200).json(
-            {
-                message: "logout sucessfully",
-            }
-        )
+        const authHeader = req.headers["Authorization"];
+        console.log(authHeader,'he')
+        jwt.sign(authHeader, "", { expiresIn: 1 } , (logout, err) => {
+        if (logout) {
+        res.send({msg : 'You have been Logged Out' });
+        } else {
+        res.send({msg:'Error'});
+        }
+    })
     } catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)
