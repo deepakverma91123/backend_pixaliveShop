@@ -5,6 +5,7 @@ exports.products = async () => {
 };
 exports.productById = async id => {
     const product = await Product.findById(id);
+    console.log(product, 'productId');
     return product;
 }
 exports.createProduct = async payload => {

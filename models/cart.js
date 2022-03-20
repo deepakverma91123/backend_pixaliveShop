@@ -6,21 +6,21 @@ let ItemSchema = new mongoose.Schema({
     ref: "User"
   },
   productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Products",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Products",
   },
   quantity: {
-      type: Number,
-      required: true,
-      min: [1, 'Quantity can not be less then 1.']
+    type: Number,
+    required: true,
+    min: [1, 'Quantity can not be less then 1.']
   },
   price: {
-      type: Number,
-      required: true
+    type: Number,
+    required: true
   },
   total: {
-      type: Number,
-      required: true,
+    type: Number,
+    required: true,
   }
 }, {
   timestamps: true
@@ -29,10 +29,14 @@ let ItemSchema = new mongoose.Schema({
 const CartSchema = new mongoose.Schema(
   {
     items: [ItemSchema],
-
-    subTotal:{
+    subQuantity: {
+      type: Number,
+      required: true,
+      min: [1, 'Quantity can not be less then 1.']
+    },
+    subTotal: {
       default: 0,
-        type: Number
+      type: Number
     }
   },
   { timestamps: true }

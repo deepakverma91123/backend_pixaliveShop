@@ -4,14 +4,16 @@ const cartRepository = require('../controllers/repository')
 const productRepository = require('../controllers/productrepo')
 
 exports.addCart = async (req, res) => {
-    const {
-        productId
-    } = req.body;
+    // const {
+    //     productId
+    // } = req.body;
+    console.log(req.body, 'rew')
     const quantity = Number.parseInt(req.body.quantity);
+    // const quantity = req.query.quantity
     try {
         let cart = await cartRepository.cart();
-        let productDetails = await productRepository.productById(productId);
-             if (!productDetails) {
+        let productDetails = await productRepository.productById(req.params.id);
+        if (!productDetails) {
             return res.status(500).json({
                 type: "Not Found",
                 msg: "Invalid request"
@@ -20,13 +22,15 @@ exports.addCart = async (req, res) => {
         //--If Cart Exists ----
         if (cart) {
             //---- check if index exists ----
-            const indexFound = cart.items.findIndex(item => item.productId.id == productId);
+            const indexFound = cart.items.findIndex(item => item.productId.id == req.params.id);
             //------this removes an item from the the cart if the quantity is set to zero,We can use this method to remove an item from the list  -------
             if (indexFound !== -1 && quantity <= 0) {
                 cart.items.splice(indexFound, 1);
                 if (cart.items.length == 0) {
+                    cart.subQuantity = 0
                     cart.subTotal = 0;
                 } else {
+                    cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
                     cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
                 }
             }
@@ -35,20 +39,24 @@ exports.addCart = async (req, res) => {
                 cart.items[indexFound].quantity = cart.items[indexFound].quantity + quantity;
                 cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
                 cart.items[indexFound].price = productDetails.price
+                cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
             }
             //----Check if Quantity is Greater than 0 then add item to items Array ----
             else if (quantity > 0) {
                 cart.items.push({
-                    productId: productId,
+                    productId: req.params.id,
                     quantity: quantity,
                     price: productDetails.price,
                     total: parseInt(productDetails.price * quantity)
                 })
+                cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next)=> acc + next)
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
             }
+
             //----if quantity of price is 0 throw the error -------
             else {
+                console.log(indexFound, quantity, 'cart')
                 return res.status(400).json({
                     type: "Invalid",
                     msg: "Invalid request"
@@ -65,7 +73,7 @@ exports.addCart = async (req, res) => {
         else {
             const cartData = {
                 items: [{
-                    productId: productId,
+                    productId: req.params.id,
                     quantity: quantity,
                     total: parseInt(productDetails.price * quantity),
                     price: productDetails.price
