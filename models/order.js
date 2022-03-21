@@ -20,36 +20,18 @@ const orderSchema = new mongoose.Schema({
             require: true
         }
     },
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Products",
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        require: true,
-        ref: 'User'
+        ref: "User",
     },
-    orderItems: [
-        {
-            name: {
-                type: String,
-                require: true
-            },
-            quantity: {
-                type: Number,
-                require: true
-            },
-            image: {
-                type: String,
-                require: true
-            },
-            price: {
-                type: Number,
-                require: true
-            },
-            product: {
-                type: mongoose.Schema.Types.ObjectId,
-                require: true,
-                ref: "Products"
-            }
-        }
-    ],
+    cart: {
+        type: Number,
+        default: 1
+    },
     paymentInfo: {
         id: {
             type: String

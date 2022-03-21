@@ -6,7 +6,7 @@ const user = require('../models/user')
 exports.newOrder = async (req, res) => {
     try {
         const {
-            orderItems,
+            cart,
             shippingInfo,
             totalPrice,
             ShippingPrice,
@@ -16,7 +16,7 @@ exports.newOrder = async (req, res) => {
         } = req.body
 
         const order = await Order.create({
-            orderItems,
+            cart,
             shippingInfo,
             totalPrice,
             ShippingPrice,
@@ -40,7 +40,7 @@ exports.newOrder = async (req, res) => {
 
 exports.getSingleOrder = async (req, res, next) => {
     try {
-        const order = await Order.findById(req.params.id).populate('user', 'name email')
+        const order = await Order.findById(req.params.id).populate('cart')
         if (!order) {
             res.status(400).json({ message: "order not found" })
             return;
