@@ -78,6 +78,7 @@ exports.addCart = async (req, res) => {
                     total: parseInt(productDetails.price * quantity),
                     price: productDetails.price
                 }],
+                subQuantity: parseInt(productDetails.quantity * quantity),
                 subTotal: parseInt(productDetails.price * quantity)
             }
             cart = await cartRepository.addItem(cartData)
