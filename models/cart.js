@@ -31,7 +31,6 @@ const CartSchema = new mongoose.Schema(
     items: [ItemSchema],
     subQuantity: {
       type: Number,
-      required: true,
       min: [1, 'Quantity can not be less then 1.']
     },
     subTotal: {

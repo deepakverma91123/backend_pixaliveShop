@@ -58,8 +58,8 @@ exports.addCart = async (req, res) => {
             else {
                 console.log(indexFound, quantity, 'cart')
                 return res.status(400).json({
-                    type: "Invalid",
-                    msg: "Invalid request"
+                    type: "Invalid ",
+                    msg: "Invalid request !product doesnt exist in cart !"
                 })
             }
             let data = await cart.save();
@@ -116,9 +116,12 @@ exports.getCart = async (req, res) => {
         })
     }
 }
+
+
 exports.emptyCart = async (req, res) => {
     try {
         let cart = await cartRepository.cart();
+        
         cart.items = [];
         cart.subTotal = 0
         let data = await cart.save();

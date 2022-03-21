@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-
 const orderSchema = new mongoose.Schema({
     shippingInfo: {
         city: {
@@ -20,18 +19,22 @@ const orderSchema = new mongoose.Schema({
             require: true
         }
     },
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Products",
+    cart:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"cart"
     },
+    // product: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Products",
+    // },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    cart: {
-        type: Number,
-        default: 1
-    },
+    // cart: {
+    //     type: Number,
+    //     default: 1
+    // },
     paymentInfo: {
         id: {
             type: String
@@ -39,37 +42,38 @@ const orderSchema = new mongoose.Schema({
         status: {
             type: String
         },
-    }, paidAt: {
+    },
+     paidAt: {
         type: Date
     },
     itemPrices: {
         type: Number,
-        require: true,
+        // require: true,
         default: 0.0
     },
     taxPrice: {
         type: Number,
-        require: true,
+        // require: true,
         default: 0.0
     },
     ShippingPrice: {
         type: String,
-        require: true,
+        // require: true,
         default: 0.0
     },
     totalPrice: {
         type: String,
-        require: true,
+        // require: true,
         default: 0.0
     },
     orderStatus: {
         type: String,
-        require: true,
+        // require: true,
         default: "process"
     },
     deliveryAt: {
         type: Date,
-        require: true
+        // require: true
     },
     createdAt: {
         type: Date,
