@@ -5,30 +5,51 @@ const cloudinary = require('cloudinary')
 
 exports.newproduct = async (req, res) => {
     try {
-        // let images = []
-        // if (typeof req.file.images === 'string') {
-        //     images.push(req.file.images)
-        // } else {
-        //     images = req.file.images
-        // }
-        // let imagesLinks = [];
-        // for (let i = 0; i < images.length; i++) {
-        //     const result = await cloudinary.v2.uploader.upload(images[i], {
-        //         folder: 'products'
-        //     });
-        //     imagesLinks.push({
-        //         public_id: result.public_id,
-        //         url: result.secure_url
-        //     })
-        // }
-        // // console.log(req.file.images, images);
-        // req.file.images = imagesLinks
+        let images = []
+        if (typeof req.body.images === 'string') {
+            images.push(req.body.images)
+        } else {
+            images = req.body.images
+        }
+
+        let imagesLinks = [];
+        console.log(images, 'data')
+        let result
+        for (let i = 0; i < images.length; i++) {
+             result = await cloudinary.v2.uploader.upload(images[i], {
+                folder: 'backendapi'
+            });
+            console.log(result, 'res')
+            console.log(imagesLinks, 'links1')
+
+            imagesLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            })
+        }
+        console.log(imagesLinks, 'links')
+
+        req.body.images = imagesLinks
+        console.log(req.body.images)
         req.body.user = req.user.id;
-        const product = await Product.create(req.body)
-        if (!product) {
+        console.log(req.body, 'body')
+        const products = await Product.create({
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            rating: req.body.rating,
+            images:imagesLinks,
+            category: req.body.category,
+            stock: req.body.stock,
+            numbOfReviews: req.body.numbOfReviews
+        })
+        console.log(products,'orpd')
+        await products.save()
+
+        if (!products) {
             res.status(400).json({ message: "failed to add product" })
         }
-        res.status(200).json({ message: "Sucess", product })
+        res.status(200).json({ message: "Sucess", products })
     } catch (err) {
         console.log(err)
     }
@@ -124,10 +145,10 @@ exports.deleteProducts = async (req, res) => {
 }
 exports.getListByCategory = async (req, res) => {
     try {
-      
+
         const categoryById = await Category.findById(req.params.id);
         console.log(categoryById)
-        
+
         // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
         // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
 
@@ -220,9 +241,9 @@ exports.lessthensortbyprice = async (req, res) => {
         const p = req.query.price
         const s = req.query.prices
 
-        console.log('p',p)
-        console.log('s',s)
-        const pricedatafilter = await Product.find({ price: { $gte: p,$lte:s } }).select({ price: 1, name: 1 }).sort({ price: -1 });
+        console.log('p', p)
+        console.log('s', s)
+        const pricedatafilter = await Product.find({ price: { $gte: p, $lte: s } }).select({ price: 1, name: 1 }).sort({ price: -1 });
         // const pricedatafilter = await Product.find({ price: { $gt:p,$lt:s} }).select({ price: 1, name: 1 }).sort({ price: -1 });
         console.log(pricedatafilter)
 
@@ -245,7 +266,7 @@ exports.lessthensortbyprice = async (req, res) => {
 exports.GetproductById = async (req, res) => {
     try {
 
-         
+
         // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
         // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
 
@@ -288,7 +309,7 @@ exports.getProductByUserId = async (req, res) => {
             res.status(400).json({ message: "you have no productsByUserId" })
             return;
         }
-        res.status(200).json({ message: "Products", count: productsByUserId.length , productsByUserId })
+        res.status(200).json({ message: "Products", count: productsByUserId.length, productsByUserId })
     } catch (error) {
         console.log(error);
     }
