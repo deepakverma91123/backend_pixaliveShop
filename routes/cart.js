@@ -8,6 +8,10 @@ router.post('/addtocart/:id',isAuthenticated,cartController.addCart)
 // router.post('/addtocart', isAuthenticated, cartController.addCart)
 
 router.get('/getcart', isAuthenticated, cartController.getCart)
+
+// need to wqork on it
+router.delete('/deletecartbyid/:id',isAuthenticated,cartController.deletebyId)
+
 router.delete('/deletecart', isAuthenticated, cartController.emptyCart)
 
 

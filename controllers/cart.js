@@ -2,6 +2,7 @@ const Cart = require('../models/cart')
 const Products = require('../models/products')
 const cartRepository = require('../controllers/repository')
 const productRepository = require('../controllers/productrepo')
+const { findById } = require('../models/products')
 
 exports.addCart = async (req, res) => {
     // const {
@@ -50,10 +51,12 @@ exports.addCart = async (req, res) => {
                     price: productDetails.price,
                     total: parseInt(productDetails.price * quantity)
                 })
-                cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next)=> acc + next)
+                cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
             }
-
+            // else if (quantity < 1) {
+                
+            // }
             //----if quantity of price is 0 throw the error -------
             else {
                 console.log(indexFound, quantity, 'cart')
@@ -118,11 +121,34 @@ exports.getCart = async (req, res) => {
     }
 }
 
+exports.deletebyId = async (req, res) => {
+    try {
+        const findcart = await Cart.findById(req.params.id)
+        if (!findcart) {
+            res.status(400).json({ message: "cart does not exist" })
+            return;
+        }
+
+        let cartitems = findcart.items.map(function (item) {
+            return item.id
+        })
+        console.log(cartitems[0])
+        cartitems = req.body.cartitem
+        console.log(cartitems)
+        const deleteid = await Cart.findById(cartit)
+        console.log(deleteid);
+        res.status(200).json({ message: "cart items delete", deleteid })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: "something went wrong !!!", err })
+    }
+}
+
 
 exports.emptyCart = async (req, res) => {
     try {
         let cart = await cartRepository.cart();
-        
+
         cart.items = [];
         cart.subTotal = 0
         let data = await cart.save();
