@@ -9,6 +9,7 @@ const Category = require('./routes/category')
 const Wishlists = require('./routes/wishlist')
 const subCategory = require('./routes/subCategory')
 const Cart = require('./routes/cart')
+const payment = require('./routes/payment')
 
 const cloudinary = require('cloudinary')
 const multer = require('multer')
@@ -20,7 +21,9 @@ require("dotenv").config();
 app.use(cookieParser());
 app.use(express.json())
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
+// app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(express.json({ limit: "50mb" })); 
+app.use(express.urlencoded({ limit: "50mb", extended: true }))
 app.use(fileUpload());
 app.use(cors())
 // app.use(fileUpload({
@@ -43,6 +46,7 @@ app.use('/api', Wishlists)
 app.use('/api',barndRoutes)
 app.use('/api',subCategory)
 app.use('/api',Cart)
+app.use('/api',payment)
 // schemaName.index({ request: 'text' });
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
