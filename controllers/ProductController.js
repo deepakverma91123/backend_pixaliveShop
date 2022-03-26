@@ -41,14 +41,16 @@ exports.newproduct = async (req, res) => {
             images:imagesLinks,
             category: req.body.category,
             stock: req.body.stock,
+            IsFeature: req.body.IsFeature,
+            user:req.user.id,
+
             numbOfReviews: req.body.numbOfReviews
         })
-        console.log(products,'orpd')
-        await products.save()
-
         if (!products) {
             res.status(400).json({ message: "failed to add product" })
         }
+        console.log(products,'orpd')
+        await products.save()
         res.status(200).json({ message: "Sucess", products })
     } catch (err) {
         console.log(err)
@@ -304,7 +306,7 @@ exports.getProductByUserId = async (req, res) => {
     try {
         console.log(req.user.id, 'userId')
         const productsByUserId = await Product.find({ user: req.user._id })
-        console.log(productsByUserId, 'produccts')
+        console.log(productsByUserId, 'products')
         if (!productsByUserId) {
             res.status(400).json({ message: "you have no productsByUserId" })
             return;

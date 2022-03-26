@@ -8,7 +8,7 @@ exports.addCart = async (req, res) => {
     // const {
     //     productId
     // } = req.body;
-    console.log(req.body, 'rew')
+    // console.log(req.body, 'rew')
     const quantity = Number.parseInt(req.body.quantity);
     // const quantity = req.query.quantity
     try {
