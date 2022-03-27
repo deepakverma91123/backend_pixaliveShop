@@ -107,6 +107,7 @@ exports.getCart = async (req, res) => {
                 msg: "Cart Not Found",
             })
         }
+        console.log(cart);
         res.status(200).json({
             status: true,
             data: cart

@@ -23,10 +23,10 @@ const orderSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"cart"
     },
-    // product: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Products",
-    // },
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Products",
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
