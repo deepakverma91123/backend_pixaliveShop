@@ -10,7 +10,9 @@ router.get('/order/:id', isAuthenticated, orderController.getSingleOrder)
 
 router.get('/orders/me', isAuthenticated, orderController.myOrder)
 
-router.get('/admin/allorder', isAuthenticated,authorizeRoles('admin'), orderController.allOrders)
+router.get('/admin/allorder', isAuthenticated,authorizeRoles('admin','seller'), orderController.allOrders)
+
+router.get('/order_id', isAuthenticated,authorizeRoles('admin','seller'), orderController.ordersBySellerId)
 
 router.put('/admin/order/update/:id',isAuthenticated,authorizeRoles('admin','seller'),orderController.updateOrderStatus)
 

@@ -78,6 +78,14 @@ exports.getSingleOrder = async (req, res, next) => {
     }
 }
 
+exports.orderseller = async (req, res) => {
+    try {
+        const sellerOrder = await Order.find()
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: "something went wrongs !", err })
+    }
+}
 
 exports.myOrder = async (req, res) => {
     try {
@@ -101,14 +109,13 @@ exports.myOrder = async (req, res) => {
 
 exports.allOrders = async (req, res) => {
     try {
-
         const orders = await Order.find()
         let totalPrice = 0;
         orders.forEach(Order => {
             totalPrice += Order.totalPrice
         })
         if (orders) {
-            res.status(200).json({ message: "Order fornd", totalPrice, orders })
+            res.status(200).json({ message: "Order fornd", orders, totalPrice })
             return;
         }
     } catch (err) {
@@ -117,6 +124,23 @@ exports.allOrders = async (req, res) => {
     }
 }
 // 
+
+exports.ordersBySellerId = async (req, res) => {
+    try {
+        const orders = await Order.find({ user: req.user._id }).populate('user').populate('cart')
+        let totalPrice = 0;
+        orders.forEach(Order => {
+            totalPrice += Order.totalPrice
+        })
+        if (orders) {
+            res.status(200).json({ message: "Order fornd", count:orders.length,orders, totalPrice })
+            return;
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ message: "order not found" })
+    }
+}
 
 // 
 exports.updateOrderStatus = async (req, res) => {
@@ -127,8 +151,8 @@ exports.updateOrderStatus = async (req, res) => {
             // res.status(201).json({ message: "you have already delivered the order" })
             console.log(orders.cart, 'data')
             let a = orders.cart.items
-            a.map(async(b) => {
-                await updateStock( b.productId,b.quantity)
+            a.map(async (b) => {
+                await updateStock(b.productId, b.quantity)
             })
 
             // orders.orderItems.forEach(async item => {
@@ -139,7 +163,7 @@ exports.updateOrderStatus = async (req, res) => {
                 orders.deliveredAt = Date.now()
 
             await orders.save()
-            res.status(200).json({message:"stock updates suceesfullly"})
+            res.status(200).json({ message: "stock updates suceesfullly" })
             return;
             // if (orders) {
             //     return res.status(200).json({ message: "Order found", orders });
@@ -147,7 +171,7 @@ exports.updateOrderStatus = async (req, res) => {
             // return;
         }
         // else {
-            res.status(402).json({ message: "order not found" })
+        res.status(402).json({ message: "order not found" })
         // }
     } catch (err) {
         res.status(400).json({ message: "err" })

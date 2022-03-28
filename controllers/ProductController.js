@@ -2,6 +2,7 @@ const express = require('express')
 const { Category } = require('../models/catergoies')
 const Product = require('../models/products')
 const cloudinary = require('cloudinary')
+const user = require('../models/user')
 
 exports.newproduct = async (req, res) => {
     try {
@@ -286,6 +287,15 @@ exports.GetproductById = async (req, res) => {
     }
 }
 
+// exports.getProductByUserId = async(req, res) => {
+//     try {
+//         console.log(req.params._id);
+//         const prodByUserId = await user.findById(req.params.id)
+//         console.log(prodByUserId, 'id');
+//     } catch (error) {
+//         res.status(500).json({message: 'Something went wrong'})
+//     }
+// }
 
 exports.Promotion = async (req, res) => {
     try {
