@@ -141,6 +141,10 @@ exports.ordersBySellerId = async (req, res) => {
         res.status(400).json({ message: "order not found" })
     }
 }
+// order by seller id 
+
+
+
 
 // 
 exports.updateOrderStatus = async (req, res) => {

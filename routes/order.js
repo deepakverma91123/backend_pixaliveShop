@@ -14,6 +14,8 @@ router.get('/admin/allorder', isAuthenticated,authorizeRoles('admin','seller'), 
 
 router.get('/order_id', isAuthenticated,authorizeRoles('admin','seller'), orderController.ordersBySellerId)
 
+// router.get('/order_id/:id',isAuthenticated,authorizeRoles('seller','admin'),)
+
 router.put('/admin/order/update/:id',isAuthenticated,authorizeRoles('admin','seller'),orderController.updateOrderStatus)
 
 router.delete('/admin/order/delete/:id',isAuthenticated,authorizeRoles('admin'),orderController.deleteOrder)
