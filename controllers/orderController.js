@@ -128,6 +128,7 @@ exports.allOrders = async (req, res) => {
 exports.ordersBySellerId = async (req, res) => {
     try {
         const orders = await Order.find({ user: req.user._id }).populate('user').populate('cart')
+        console.log(req.user._id)
         let totalPrice = 0;
         orders.forEach(Order => {
             totalPrice += Order.totalPrice
