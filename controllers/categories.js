@@ -4,12 +4,12 @@ const { Category } = require('../models/catergoies');
 
 exports.categories = async (req, res) => {
     try {
-        
+
         const category = new Category({
             name: req.body.name,
             icon: req.body.icon,
             image: req.body.image,
-            subCategory: req.body.subCategory
+            // subCategory: req.body.subCategory
         })
         await category.save()
         res.status(200).json({ message: "categoy saved sucessfull", category })
@@ -27,7 +27,7 @@ exports.getCategory = async (req, res) => {
         console.log(categoryList)
         if (!categoryList) {
             res.status(400).json({ message: "Category lIst not found" });
-           
+
             return;
         }
         res.status(200).json({ message: "category list", categoryList })
@@ -58,7 +58,7 @@ exports.updateCategory = async (req, res) => {
         const updateCategory = await Category.findByIdAndUpdate(req.params.id, {
             name: req.body.name,
             icon: req.body.icon,
-            subCategory:req.body.subCategory
+            subCategory: req.body.subCategory
         }, {
             new: true
         })
@@ -89,3 +89,12 @@ exports.deleteCategory = async (req, res) => {
     }
 }
 
+// exports.BySubcategory = async () => {
+//     try {
+//         const getCat = await Category
+
+//     } catch (Err) {
+//         res.status(500).json({message:"Something Went Wrong !",err})
+//         console.log(Err)
+//     }
+// }

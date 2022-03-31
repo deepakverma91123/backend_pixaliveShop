@@ -41,6 +41,7 @@ exports.newproduct = async (req, res) => {
             rating: req.body.rating,
             images:imagesLinks,
             category: req.body.category,
+            subCategory:req.body.subCategory,
             stock: req.body.stock,
             IsFeature: req.body.IsFeature,
             user:req.user.id,

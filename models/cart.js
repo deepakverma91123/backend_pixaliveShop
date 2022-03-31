@@ -29,10 +29,10 @@ let ItemSchema = new mongoose.Schema({
 const CartSchema = new mongoose.Schema(
   {
     items: [ItemSchema],
-    subQuantity: {
-      type: Number,
-      default: 0
-    },
+    // subQuantity: {
+    //   type: Number,
+    //   default: 0
+    // },
     subTotal: {
       default: 0,
       type: Number

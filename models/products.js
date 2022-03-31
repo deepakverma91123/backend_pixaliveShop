@@ -83,6 +83,7 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "User"
     },
+    // subCategory
     createdAt: {
         type: Date,
         default: Date.now

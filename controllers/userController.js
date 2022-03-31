@@ -91,7 +91,7 @@ exports.registerUser = async (req, res) => {
 
         const { name, email, password, role } = req.body;
 
-        const users = await User.create({
+        const user = await User.create({
             name,
             email,
             password,
@@ -100,15 +100,15 @@ exports.registerUser = async (req, res) => {
                 url: result.secure_url
             }, role
         })
-        if (users) {
-            const token = users.getJwtToken()
+        if (user) {
+            const token = user.getJwtToken()
             console.log(token)
             const salt = await bcrypt.genSalt(10);
-            users.password = await bcrypt.hash(users.password, salt);
-            await users.save()
+            user.password = await bcrypt.hash(user.password, salt);
+            await user.save()
             res.status(200).json({
                 message: 'user successfuly',
-                users, token
+                user, token
             })
             // res.cookie("token", token, {
             //     expries: new Date(

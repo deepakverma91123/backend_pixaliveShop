@@ -1,11 +1,11 @@
-const  {SubCategory}  = require('../models/subCategories');
+const { SubCategory } = require('../models/subCategories');
 
-exports.addSubCategory = async(req, res) => {
+exports.addSubCategory = async (req, res) => {
     try {
         const subCategories = new SubCategory({
             name: req.body.name,
             color: req.body.color,
-            size: req.body.size,
+            Category: req.body.Category
         })
         await subCategories.save()
         res.status(200).json({ message: "Sub Category saved sucessfull", subCategories })
@@ -17,7 +17,7 @@ exports.addSubCategory = async(req, res) => {
 exports.getSubCategory = async (req, res) => {
     try {
         console.log(req)
-        const subCategoryList = await SubCategory.find();
+        const subCategoryList = await SubCategory.find().populate('Category');
         console.log(subCategoryList)
         if (!subCategoryList) {
             res.status(400).json({ message: "SubCategory lIst not found" });

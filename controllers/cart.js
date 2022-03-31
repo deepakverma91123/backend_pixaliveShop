@@ -28,10 +28,10 @@ exports.addCart = async (req, res) => {
             if (indexFound !== -1 && quantity <= 0) {
                 cart.items.splice(indexFound, 1);
                 if (cart.items.length == 0) {
-                    cart.subQuantity = 0
+                    // cart.subQuantity = 0
                     cart.subTotal = 0;
                 } else {
-                    cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
+                    // cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
                     cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
                 }
             }
@@ -40,7 +40,7 @@ exports.addCart = async (req, res) => {
                 cart.items[indexFound].quantity = cart.items[indexFound].quantity + quantity;
                 cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
                 cart.items[indexFound].price = productDetails.price
-                cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
+                // cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
             }
             //----Check if Quantity is Greater than 0 then add item to items Array ----
@@ -51,7 +51,7 @@ exports.addCart = async (req, res) => {
                     price: productDetails.price,
                     total: parseInt(productDetails.price * quantity)
                 })
-                cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
+                // cart.subQuantity = cart.items.map(item => item.quantity).reduce((acc, next) => acc + next)
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
             }
             // else if (quantity < 1) {
