@@ -89,9 +89,9 @@ exports.orderseller = async (req, res) => {
 
 exports.myOrder = async (req, res) => {
     try {
-        console.log(req.user.id)
+        // console.log(req.user.id)
         // const users = await user.find({ user: req.user.id })
-        const orders = await Order.find({ user: req.user._id })
+        const orders = await Order.find({ user: req.user._id }).populate('user').populate('cart')
         console.log(orders)
         if (!orders) {
             res.status(400).json({ message: "you have no orders" })
