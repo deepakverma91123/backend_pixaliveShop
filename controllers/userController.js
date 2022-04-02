@@ -137,7 +137,7 @@ exports.isLogin = async (req, res) => {
         // const secret = process.env.JWT
         const user = await User.findOne({
             email: req.body.email,
-            phone: req.body.phone
+            // phone: req.body.phone
         })
         if (!user) {
             res.status(400).json({ message: "user not found" })
