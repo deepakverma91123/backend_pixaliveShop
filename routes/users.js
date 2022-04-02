@@ -34,6 +34,7 @@ router.get('/me', isAuthenticated, UserController.getUserDetails)
 
 router.put('/updatepassword', isAuthenticated, UserController.updatePassword)
 
+// router.get()
 // router.use(fileUpload({
 //     // useTempFiles: true
 // }))

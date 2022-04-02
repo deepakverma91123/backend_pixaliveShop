@@ -40,7 +40,7 @@ exports.getCategory = async (req, res) => {
 
 exports.getCategoryById = async (req, res) => {
     try {
-        const categoryById = await Category.findById(req.params.id).populate('subCategory');
+        const categoryById = await Category.findById(req.params.id);
         if (!categoryById) {
             res.status(400).json({ message: "failed to fetch data" })
             return;
