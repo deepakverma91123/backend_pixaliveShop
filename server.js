@@ -9,6 +9,7 @@ const Category = require('./routes/category')
 const Wishlists = require('./routes/wishlist')
 const subCategory = require('./routes/subCategory')
 const Cart = require('./routes/cart')
+const Color = require('./routes/color')
 const payment = require('./routes/payment')
 
 const cloudinary = require('cloudinary')
@@ -38,6 +39,7 @@ cloudinary.config({
 
 //
 app.use('/api', productrouter)
+app.use('/api',Color);
 app.use('/api', auth);
 app.use('/api', order)
 app.use('/api', Category)

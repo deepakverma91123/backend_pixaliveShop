@@ -79,17 +79,17 @@ exports.registerUser = async (req, res) => {
     try {
 
         let findusers = await User.findOne({ email: req.body.email })
-            if (findusers) {
-                res.status(401).json('users already present')
-                return;
-            }
+        if (findusers) {
+            res.status(401).json('users already present')
+            return;
+        }
         const result = await cloudinary.uploader.upload(req.body.avatar, {
             folder: 'backendapi',
             width: 150,
             crop: "scale"
         })
 
-        const { name, email, password, role } = req.body;
+        const { name, email, password, brandName, role, phone, brandWebsite, brandRevenue, brandDescriptions } = req.body;
 
         const user = await User.create({
             name,
@@ -98,7 +98,14 @@ exports.registerUser = async (req, res) => {
             avatar: {
                 public_id: result.public_id,
                 url: result.secure_url
-            }, role
+            },
+            role,
+            phone,
+            brandName,
+            brandWebsite,
+            brandRevenue,
+            brandDescriptions
+
         })
         if (user) {
             const token = user.getJwtToken()
@@ -128,7 +135,10 @@ exports.registerUser = async (req, res) => {
 exports.isLogin = async (req, res) => {
     try {
         // const secret = process.env.JWT
-        const user = await User.findOne({ email: req.body.email })
+        const user = await User.findOne({
+            email: req.body.email,
+            phone: req.body.phone
+        })
         if (!user) {
             res.status(400).json({ message: "user not found" })
             return;
@@ -145,7 +155,7 @@ exports.isLogin = async (req, res) => {
             const token = user.getJwtToken()
             // console.log(token)
             let userrole = user.role
-            return res.status(200).json({ message: 'User added success', user, token, userrole })
+            return res.status(200).json({ message: 'User Logged in success', user, token, userrole })
             // res.send('token', token, {
             //     expries: new Date(
             //         Date.now() + process.env.CookieExpries * 24 * 60 * 60 * 1000
@@ -164,14 +174,14 @@ exports.isLogin = async (req, res) => {
 exports.Logout = async (req, res) => {
     try {
         const authHeader = req.headers["Authorization"];
-        console.log(authHeader,'he')
-        jwt.sign(authHeader, "", { expiresIn: 1 } , (logout, err) => {
-        if (logout) {
-        res.send({msg : 'You have been Logged Out' });
-        } else {
-        res.send({msg:'Error'});
-        }
-    })
+        console.log(authHeader, 'he')
+        jwt.sign(authHeader, "", { expiresIn: 1 }, (logout, err) => {
+            if (logout) {
+                res.send({ msg: 'You have been Logged Out' });
+            } else {
+                res.send({ msg: 'Error' });
+            }
+        })
     } catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)

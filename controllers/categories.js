@@ -9,7 +9,7 @@ exports.categories = async (req, res) => {
             name: req.body.name,
             icon: req.body.icon,
             image: req.body.image,
-            // subCategory: req.body.subCategory
+            // SubCategory: req.body.SubCategory
         })
         await category.save()
         res.status(200).json({ message: "categoy saved sucessfull", category })
@@ -22,9 +22,9 @@ exports.categories = async (req, res) => {
 
 exports.getCategory = async (req, res) => {
     try {
-        console.log(req)
-        const categoryList = await Category.find().populate('subCategory');
-        console.log(categoryList)
+        // console.log(req)
+        const categoryList = await Category.find();
+        console.log('dd',categoryList)
         if (!categoryList) {
             res.status(400).json({ message: "Category lIst not found" });
 

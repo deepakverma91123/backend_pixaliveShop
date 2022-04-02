@@ -2,6 +2,7 @@ const Order = require('../models/order')
 const Products = require('../models/products')
 const Cart = require('../models/cart')
 const { get } = require('mongoose')
+const products = require('../models/products')
 
 
 exports.newOrder = async (req, res) => {
@@ -9,20 +10,27 @@ exports.newOrder = async (req, res) => {
         const {
             cart,
             shippingInfo,
-            totalPrice,
+            // totalPrice,
             ShippingPrice,
             taxPrice,
-            itemPrices,
+            // itemPrices,
             paymentInfo
         } = req.body
         console.log(req.body.cart, 'user')
+        const cartData = await Cart.findById(req.body.cart)
+        let data
+        cartData.items.map((i) => {
+         data = i.price
+        })
+        // console.log(cartData, 'hv');
+        console.log(cartData.subTotal, 'hhsuv');
         const order = await Order.create({
             cart,
             shippingInfo,
-            totalPrice,
+            totalPrice:cartData.subTotal,
             ShippingPrice,
             taxPrice,
-            itemPrices,
+            itemPrices:data,
             paymentInfo,
             paidAt: Date.now(),
             user: req.user._id
@@ -93,10 +101,22 @@ exports.myOrder = async (req, res) => {
         // const users = await user.find({ user: req.user.id })
         const orders = await Order.find({ user: req.user._id }).populate('user').populate('cart')
         console.log(orders)
+        let productdata
+        orders.map((i) => {
+            // console.log(i,'ll')
+            i.cart.items.map((j) => {
+                productdata = j.productId
+                console.log(j.productId, 'kk')
+            })
+        })
+        console.log(productdata, 'l')
+        const product = await products.findById(productdata)
+        console.log('jkj', product, 'kkh')
         if (!orders) {
             res.status(400).json({ message: "you have no orders" })
             return;
         }
+        orders.push(product)
         res.status(200).json({ message: "order", orders })
     }
     catch (err) {
@@ -129,12 +149,22 @@ exports.ordersBySellerId = async (req, res) => {
     try {
         const orders = await Order.find({ user: req.user._id }).populate('user').populate('cart')
         console.log(req.user._id)
+        console.log(orders, 'i')
+        let productdata
+        orders.map((i) => {
+            // console.log(i,'ll')
+            i.cart.items.map((j) => {
+                productdata = j.productId
+                console.log(j.productId, 'kk')
+            })
+        })
+        console.log(productdata, 'l')
         let totalPrice = 0;
         orders.forEach(Order => {
             totalPrice += Order.totalPrice
         })
         if (orders) {
-            res.status(200).json({ message: "Order fornd", count:orders.length,orders, totalPrice })
+            res.status(200).json({ message: "Order fornd", count: orders.length, productdata, orders, totalPrice })
             return;
         }
     } catch (err) {
