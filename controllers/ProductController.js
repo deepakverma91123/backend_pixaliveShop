@@ -3,6 +3,7 @@ const { Category } = require('../models/catergoies')
 const Product = require('../models/products')
 const cloudinary = require('cloudinary')
 const user = require('../models/user')
+const { SubCategory } = require('../models/subCategories')
 
 exports.newproduct = async (req, res) => {
     try {
@@ -163,6 +164,28 @@ exports.getListByCategory = async (req, res) => {
             return;
         }
         res.status(200).json({ message: "Product by categroies", getListByCategory })
+    } catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
+        console.log(err)
+    }
+}
+
+exports.getListBySubCategory = async (req, res) => {
+    try {
+
+        const subCategoryById = await SubCategory.findById(req.params.id);
+        console.log(subCategoryById)
+
+        // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+        // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
+
+        const getListBySubCategory = await Product.find({ subCategory: subCategoryById })
+        // .limit(limit).skip(skip);
+        if (!getListBySubCategory) {
+            res.status(400).json({ message: "cant find data" })
+            return;
+        }
+        res.status(200).json({ message: "Product by categroies", getListBySubCategory })
     } catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)

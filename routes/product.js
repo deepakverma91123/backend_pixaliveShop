@@ -28,6 +28,11 @@ router.get('/products/sortbypricetwo', productController.lessthensortbyprice)
 
 
 router.get('/getproductcategory/:id', productController.getListByCategory);
+
+// subCategory By Id 
+
+router.get('/getproductsubcategory/:id', productController.getListBySubCategory);
+
 // product review 
 router.get('/productreview/:id', productController.productreview);
 
