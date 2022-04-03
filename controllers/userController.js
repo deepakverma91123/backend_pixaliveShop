@@ -8,7 +8,8 @@ const crypto = require('crypto')
 const cloudinary = require('cloudinary').v2
 const multer = require('multer');
 // error
-const fs = require('fs')
+const fs = require('fs');
+const { UserOtherDetails } = require('../models/userOtherDetails');
 
 // const upload = multer({ storage: storage })
 exports.registerUser = async (req, res) => {
@@ -391,5 +392,24 @@ exports.deleteUser = async (req, res) => {
     catch (err) {
         console.log(err)
         res.status(400).json({ message: "something went wrong" })
+    }
+}
+
+exports.addAddress = async(req, res) =>{
+    try {
+        const user = await User.find({ user: req.user._id })
+        if (user) {
+            let userOthers = await UserOtherDetails.create({
+                address: req.body.address,
+                cardDetails: req.body.cardDetails
+            })
+            await userOthers.save()
+            res.status(200).json({message: 'User details saved successfully'})
+        }
+        else{
+            res.status(400).json({message: 'User not found'})
+        }
+    } catch (error) {
+        console.log(error);
     }
 }

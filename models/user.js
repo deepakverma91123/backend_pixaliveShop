@@ -27,10 +27,10 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     },
-    // url:{
-    //     type:String,
-    //     // required:true
-    // },
+    userOther:{
+        type:mongoose.Schema.objectId,
+        ref:'UserOtherDetails'
+    },
     // product:{
     //     type:mongoose.Schema.objectId,
     //     ref:'Products'

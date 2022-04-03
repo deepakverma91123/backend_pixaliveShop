@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
 // }))
 router.post('/register', UserController.registerUser)
  
+router.post('/addOthers', UserController.addAddress)
 
  
 
