@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema({
     avatar: {
         public_id: {
             type: String,
-            required: true
+            // required: true
         },
         url: {
             type: String,
-            required: true
+            // required: true
         }
     },
     userOther:{
@@ -35,6 +35,25 @@ const userSchema = new mongoose.Schema({
     //     type:mongoose.Schema.objectId,
     //     ref:'Products'
     // },
+    phone: {
+        type: Number,
+
+    },
+    // for brand only Seller
+    brandName: {
+        type: String,
+    },
+    brandWebsite: {
+        type: String
+    },
+    brandRevenue: {
+        type: Number
+    },
+    brandDescriptions: {
+        type: String
+    },
+
+    // brand descriptions
     role: {
         type: String,
         default: 'user'
@@ -47,8 +66,8 @@ const userSchema = new mongoose.Schema({
     resetpasswordExpire: Date
 })
 // compare password methods
-userSchema.methods.comparePassword = async function(enteredpassword){
-    return await bcrypt.compare(enteredpassword,this.password)
+userSchema.methods.comparePassword = async function (enteredpassword) {
+    return await bcrypt.compare(enteredpassword, this.password)
 }
 
 

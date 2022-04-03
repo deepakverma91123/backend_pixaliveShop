@@ -8,9 +8,14 @@ const subCategorySchema = mongoose.Schema({
     color: {
         type: String,
     },
-    size: {
-        type: String
-    }
+    Category: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Category'
+    },
+    // product: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'Products'54
+    // }
 })
 
 

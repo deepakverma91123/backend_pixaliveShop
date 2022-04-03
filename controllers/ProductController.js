@@ -2,6 +2,8 @@ const express = require('express')
 const { Category } = require('../models/catergoies')
 const Product = require('../models/products')
 const cloudinary = require('cloudinary')
+const user = require('../models/user')
+const { SubCategory } = require('../models/subCategories')
 
 exports.newproduct = async (req, res) => {
     try {
@@ -40,6 +42,7 @@ exports.newproduct = async (req, res) => {
             rating: req.body.rating,
             images:imagesLinks,
             category: req.body.category,
+            subCategory:req.body.subCategory,
             stock: req.body.stock,
             IsFeature: req.body.IsFeature,
             user:req.user.id,
@@ -167,6 +170,28 @@ exports.getListByCategory = async (req, res) => {
     }
 }
 
+exports.getListBySubCategory = async (req, res) => {
+    try {
+
+        const subCategoryById = await SubCategory.findById(req.params.id);
+        console.log(subCategoryById)
+
+        // const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+        // const skip = parseInt(req.query.skip);// Make sure to parse the skip to number
+
+        const getListBySubCategory = await Product.find({ subCategory: subCategoryById })
+        // .limit(limit).skip(skip);
+        if (!getListBySubCategory) {
+            res.status(400).json({ message: "cant find data" })
+            return;
+        }
+        res.status(200).json({ message: "Product by Subcategroies", getListBySubCategory })
+    } catch (err) {
+        res.status(400).json({ message: "Something went wrong", err });
+        console.log(err)
+    }
+}
+
 exports.productreview = async (req, res) => {
     try {
 
@@ -286,6 +311,15 @@ exports.GetproductById = async (req, res) => {
     }
 }
 
+// exports.getProductByUserId = async(req, res) => {
+//     try {
+//         console.log(req.params._id);
+//         const prodByUserId = await user.findById(req.params.id)
+//         console.log(prodByUserId, 'id');
+//     } catch (error) {
+//         res.status(500).json({message: 'Something went wrong'})
+//     }
+// }
 
 exports.Promotion = async (req, res) => {
     try {

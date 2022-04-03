@@ -11,10 +11,20 @@ const categorySchema = mongoose.Schema({
     image: {
         type: String
     },
-    subCategory: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'SubCategory'
-    },
+    subCategorydataL:{
+        
+            name:{
+                type:String
+            },
+            SubCategoryId:{
+                type:String
+            }
+        
+    }
+    // subCategory: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'SubCategory'
+    // },
 })
 
 

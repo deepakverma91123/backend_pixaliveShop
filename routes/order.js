@@ -10,9 +10,13 @@ router.get('/order/:id', isAuthenticated, orderController.getSingleOrder)
 
 router.get('/orders/me', isAuthenticated, orderController.myOrder)
 
-router.get('/admin/allorder', isAuthenticated,authorizeRoles('admin'), orderController.allOrders)
+router.get('/admin/allorder', isAuthenticated,authorizeRoles('admin','seller'), orderController.allOrders)
 
-router.put('/admin/order/update/:id',isAuthenticated,authorizeRoles('admin'),orderController.updateOrderStatus)
+router.get('/order_id', isAuthenticated,authorizeRoles('admin','seller'), orderController.ordersBySellerId)
+
+// router.get('/order_id/:id',isAuthenticated,authorizeRoles('seller','admin'),)
+
+router.put('/admin/order/update/:id',isAuthenticated,authorizeRoles('admin','seller'),orderController.updateOrderStatus)
 
 router.delete('/admin/order/delete/:id',isAuthenticated,authorizeRoles('admin'),orderController.deleteOrder)
 

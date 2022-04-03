@@ -36,7 +36,7 @@ const CartSchema = new mongoose.Schema(
     subTotal: {
       default: 0,
       type: Number
-    }
+    },
   },
   { timestamps: true }
 );

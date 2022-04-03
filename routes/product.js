@@ -16,7 +16,7 @@ router.put('/product/:id', isAuthenticated, authorizeRoles('admin'), productCont
 
 router.get('/productsid/:id', productController.GetproductById)
 // router .delete('/product/:id',isAuthenticated, authorizeRoles('admin'), deleteProducts)
-// router.get('product/:id',productController.getProductById)
+// router.get('/user/:id',productController.getProductByUserId)
 
 router.get('/products/sortbyprice/:price', productController.sortbyprice)
 
@@ -28,6 +28,11 @@ router.get('/products/sortbypricetwo', productController.lessthensortbyprice)
 
 
 router.get('/getproductcategory/:id', productController.getListByCategory);
+
+// subCategory By Id 
+
+router.get('/getproductsubcategory/:id', productController.getListBySubCategory);
+
 // product review 
 router.get('/productreview/:id', productController.productreview);
 

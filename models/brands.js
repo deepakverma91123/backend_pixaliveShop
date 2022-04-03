@@ -30,6 +30,7 @@ const brandSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     }
+    
 })
 // compare password methods
 
