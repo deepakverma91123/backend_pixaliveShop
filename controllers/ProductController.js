@@ -185,7 +185,7 @@ exports.getListBySubCategory = async (req, res) => {
             res.status(400).json({ message: "cant find data" })
             return;
         }
-        res.status(200).json({ message: "Product by categroies", getListBySubCategory })
+        res.status(200).json({ message: "Product by Subcategroies", getListBySubCategory })
     } catch (err) {
         res.status(400).json({ message: "Something went wrong", err });
         console.log(err)

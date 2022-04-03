@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// mongodb://localhost:27017/pixalive'
+mongodb://localhost:27017/pixalive'
 
 mongoose.connect('mongodb+srv://Pixalive:Pixalive1234@cluster0.tpv8o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true
@@ -13,7 +13,7 @@ mongoose.connect('mongodb+srv://Pixalive:Pixalive1234@cluster0.tpv8o.mongodb.net
 
 // 
 
-// mongoose.connect('mongodb://localhost:27017/pixalive_Db', {
+// mongoose.connect('mongodb://localhost:27017/pixalive', {
 //     useNewUrlParser: true
 // })
 // .then(()=> {
