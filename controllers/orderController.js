@@ -19,7 +19,8 @@ exports.newOrder = async (req, res) => {
         console.log(req.body.cart, 'user')
         const cartData = await Cart.findById(req.body.cart)
         let data
-        cartData.items.map((i) => {
+        console.log(cartData,'data')
+        cartData.items && cartData.items.map((i) => {
          data = i.price
         })
         // console.log(cartData, 'hv');

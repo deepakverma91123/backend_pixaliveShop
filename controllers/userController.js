@@ -136,7 +136,7 @@ exports.isLogin = async (req, res) => {
     try {
         // const secret = process.env.JWT
         const user = await User.findOne({
-            email: req.body.email,
+            email: req.body.email
             // phone: req.body.phone
         })
         if (!user) {
